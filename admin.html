@@ -9,13 +9,13 @@
 :root{--bg:#f5f1e8;--card:#fff;--t:#2c2416;--s:#8b7e6c;--g:#b8964a;--r:#8b3a3a;--j:#5b7a6a;--b:#e0d8c8;--rd:12px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Noto Serif SC','Songti SC',serif;background:var(--bg);color:var(--t);line-height:1.6;min-height:100vh}
-.login-w{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
 .login-card{background:var(--card);padding:40px 28px;border-radius:16px;box-shadow:0 8px 36px rgba(0,0,0,.06);width:100%;max-width:380px;text-align:center;border:1px solid var(--b)}
 .login-card h1{font-size:1.2rem;letter-spacing:3px;color:var(--r);margin-bottom:4px}
-.login-card .sub{font-size:.8rem;color:var(--s);margin-bottom:22px;letter-spacing:2px}
-.login-card input{width:100%;padding:12px 16px;border:1.5px solid var(--b);border-radius:8px;font-size:1rem;text-align:center;font-family:inherit;letter-spacing:2px;margin-bottom:14px}
+.login-card .sub{font-size:.8rem;color:var(--s);margin-bottom:22px}
+.login-card input{width:100%;padding:12px 16px;border:1.5px solid var(--b);border-radius:8px;font-size:1rem;text-align:center;font-family:inherit;margin-bottom:14px}
 .login-card input:focus{outline:none;border-color:var(--g)}
-.login-card button{width:100%;padding:12px;background:var(--r);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:1rem;letter-spacing:1px;transition:.3s}
+.login-card button{width:100%;padding:12px;background:var(--r);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:1rem;transition:.3s}
 .login-card button:hover{background:#6b2a2a}
 .login-err{color:var(--r);font-size:.82rem;margin-top:8px;display:none}
 .app{display:none}.app.show{display:flex}
@@ -25,38 +25,49 @@ body{font-family:'Noto Serif SC','Songti SC',serif;background:var(--bg);color:va
 .sidebar a:hover,.sidebar a.active{color:#d4a040;background:rgba(255,255,255,.03);border-left-color:#d4a040}
 .main{margin-left:200px;flex:1;padding:24px 28px;min-height:100vh}
 .main h2{font-size:1.2rem;letter-spacing:2px;color:var(--r);margin-bottom:20px}
-.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:24px}
-.stat{background:var(--card);padding:18px;border-radius:var(--rd);text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.04)}.stat .n{font-size:1.8rem;font-weight:900;color:var(--r)}.stat .l{font-size:.75rem;color:var(--s);margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:var(--card);padding:16px;border-radius:var(--rd);text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.stat .n{font-size:1.8rem;font-weight:900;color:var(--r)}.stat .l{font-size:.75rem;color:var(--s);margin-top:4px}
 .tbl{background:var(--card);border-radius:var(--rd);overflow-x:auto;box-shadow:0 2px 10px rgba(0,0,0,.04)}
 .tbl table{width:100%;border-collapse:collapse;font-size:.82rem}
 .tbl th{background:#faf7f0;padding:10px 12px;text-align:left;font-weight:700;font-size:.75rem;color:var(--s);border-bottom:2px solid var(--b);white-space:nowrap}
-.tbl td{padding:8px 12px;border-bottom:1px solid #f0e8d8;vertical-align:top}.tbl tr:hover td{background:#fdfbf6}
+.tbl td{padding:8px 12px;border-bottom:1px solid #f0e8d8}.tbl tr:hover td{background:#fdfbf6}
 .badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.7rem;font-weight:700}
 .badge-pending{background:#fef3c7;color:#92400e}.badge-approved{background:#d1fae5;color:#065f46}.badge-rejected{background:#fee2e2;color:#991b1b}
-.btn-sm{padding:4px 10px;border-radius:12px;border:none;cursor:pointer;font-size:.7rem;font-weight:700;margin:1px 2px;transition:.2s}
+.btn-sm{padding:4px 10px;border-radius:12px;border:none;cursor:pointer;font-size:.7rem;font-weight:700;margin:1px 2px}
 .btn-v{background:#dbeafe;color:#1e40af}.btn-a{background:#d1fae5;color:#065f46}.btn-x{background:#fee2e2;color:#991b1b}.btn-d{background:#f3f4f6;color:#6b7280}.btn-e{background:#e0e7ff;color:#3730a3}
-.btn-p{padding:9px 18px;background:var(--r);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;margin:2px;transition:.3s;letter-spacing:.5px}.btn-p:hover{background:#6b2a2a}
+.btn-p{padding:9px 18px;background:var(--r);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:.85rem;margin:2px;transition:.3s}.btn-p:hover{background:#6b2a2a}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
 .topbar select{padding:8px 12px;border:1.5px solid var(--b);border-radius:8px;font-size:.82rem;background:#fff;font-family:inherit}
-.modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px}.modal.open{display:flex}
-.modal-box{background:#fff;padding:24px 20px;border-radius:14px;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;position:relative}.modal-box h3{color:var(--r);margin-bottom:14px}
-.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--s);transition:.3s}.modal-close:hover{color:var(--r)}
-.fg{margin-bottom:12px}.fg label{display:block;font-weight:700;font-size:.8rem;margin-bottom:3px}.fg input,.fg textarea,.fg select{width:100%;padding:9px 12px;border:1.5px solid var(--b);border-radius:8px;font-size:.85rem;font-family:inherit}.fg textarea{min-height:100px;resize:vertical}.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.info-line{font-size:.82rem;color:var(--s);margin-bottom:4px}.content-block{background:#faf7f0;padding:12px;border-radius:8px;max-height:200px;overflow-y:auto;white-space:pre-wrap;font-size:.85rem;line-height:1.7;margin:8px 0}
-.toast{position:fixed;top:16px;right:16px;z-index:999;padding:10px 18px;border-radius:8px;color:#fff;font-weight:700;font-size:.85rem;opacity:0;transition:.35s;pointer-events:none}.toast.show{opacity:1}.toast-ok{background:var(--j)}.toast-err{background:var(--r)}
-@media(max-width:768px){.sidebar{width:50px}.sidebar h2{font-size:0;padding:8px}.sidebar h2:after{content:'新';font-size:.9rem}.sidebar a span{display:none}.sidebar a{justify-content:center;padding:10px 0}.main{margin-left:50px;padding:14px}.stats{grid-template-columns:repeat(2,1fr)}.fg-row{grid-template-columns:1fr}.tbl{font-size:.75rem}.tbl th,.tbl td{padding:6px 8px}}
+.modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.modal-box{background:#fff;padding:24px 20px;border-radius:14px;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;position:relative}
+.modal-box h3{color:var(--r);margin-bottom:14px}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--s)}
+.modal-close:hover{color:var(--r)}
+.fg{margin-bottom:12px}.fg label{display:block;font-weight:700;font-size:.8rem;margin-bottom:3px}
+.fg input,.fg textarea,.fg select{width:100%;padding:9px 12px;border:1.5px solid var(--b);border-radius:8px;font-size:.85rem;font-family:inherit}
+.fg textarea{min-height:100px;resize:vertical}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.info-line{font-size:.82rem;color:var(--s);margin-bottom:4px}
+.content-block{background:#faf7f0;padding:12px;border-radius:8px;max-height:200px;overflow-y:auto;white-space:pre-wrap;font-size:.85rem;line-height:1.7;margin:8px 0}
+.toast{position:fixed;top:16px;right:16px;z-index:999;padding:10px 18px;border-radius:8px;color:#fff;font-weight:700;font-size:.85rem;opacity:0;transition:.35s;pointer-events:none}
+.toast.show{opacity:1}.toast-ok{background:var(--j)}.toast-err{background:var(--r)}
+@media(max-width:768px){.sidebar{width:50px}.sidebar h2{font-size:0;padding:8px}.sidebar h2:after{content:'新';font-size:.9rem}.sidebar a span{display:none}.sidebar a{justify-content:center;padding:10px 0}.main{margin-left:50px;padding:14px}.stats{grid-template-columns:repeat(2,1fr)}.fg-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="toast" id="toast"></div>
 
-<div class="login-w" id="loginPage"><div class="login-card">
+<div class="login-wrap" id="loginPage">
+<div class="login-card">
 <h1>新笔文学社</h1><p class="sub">管理后台</p>
 <input type="text" id="adminUser" placeholder="用户名" autocomplete="off">
 <input type="password" id="adminPw" placeholder="密码" autocomplete="off">
 <button onclick="doLogin()">登 录</button>
 <p class="login-err" id="loginErr">用户名或密码错误</p>
-</div></div>
+</div>
+</div>
 
 <div class="app" id="appMain">
 <div class="sidebar">
@@ -77,59 +88,83 @@ body{font-family:'Noto Serif SC','Songti SC',serif;background:var(--bg);color:va
 var SB_URL='https://aybnmewinjckmftvctvx.supabase.co';
 var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE';
 var ADMIN_USER='uruban',ADMIN_PW='598047fg';
-var curPage='dash',curFilter='';
+var curPage='dash';
 
-function $(s){return document.querySelector(s)}
-function $$(s){return document.querySelectorAll(s)}
-function toast(m,t){var e=$('#toast');e.textContent=m;e.className='toast toast-'+(t||'ok')+' show';setTimeout(function(){e.classList.remove('show')},2200)}
+function Q(s){return document.querySelector(s)}
+function QQ(s){return document.querySelectorAll(s)}
+function toast(m,t){var e=Q('#toast');e.textContent=m;e.className='toast toast-'+(t||'ok')+' show';setTimeout(function(){e.classList.remove('show')},2000)}
 function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
 function fmt(d){return d?new Date(d).toLocaleDateString('zh-CN'):'-'}
 function sl(s){var m={pending:'待审核',approved:'已通过',rejected:'已拒绝'};return m[s]||'待审核'}
-function api(path,opt){opt=opt||{};var h={'apikey':SB_KEY,'Content-Type':'application/json'};return fetch(SB_URL+'/rest/v1/'+path,{method:opt.method||'GET',headers:h,body:opt.body?JSON.stringify(opt.body):undefined}).then(function(r){if(opt.method==='DELETE')return r.ok;return r.json()})}
+async function api(path,opt){opt=opt||{};var h={'apikey':SB_KEY,'Content-Type':'application/json'};var r=await fetch(SB_URL+'/rest/v1/'+path,{method:opt.method||'GET',headers:h,body:opt.body?JSON.stringify(opt.body):undefined});if(opt.method==='DELETE')return r.ok;return r.json()}
 
-function doLogin(){if($('#adminUser').value.trim()===ADMIN_USER&&$('#adminPw').value===ADMIN_PW){sessionStorage.setItem('admin_ok','1');showApp()}else{$('#loginErr').style.display='block'}}
+function doLogin(){if(Q('#adminUser').value.trim()===ADMIN_USER&&Q('#adminPw').value===ADMIN_PW){sessionStorage.setItem('admin_ok','1');showApp()}else{Q('#loginErr').style.display='block'}}
 function doLogout(){sessionStorage.removeItem('admin_ok');location.reload()}
-function showApp(){$('#loginPage').style.display='none';$('#appMain').classList.add('show');navigate('dash')}
+function showApp(){Q('#loginPage').style.display='none';Q('#appMain').classList.add('show');navigate('dash')}
 
-$$('.sidebar a[data-p]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();$$('.sidebar a').forEach(function(x){x.classList.remove('active')});this.classList.add('active');navigate(this.dataset.p)})});
+QQ('.sidebar a[data-p]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();QQ('.sidebar a[data-p]').forEach(function(x){x.classList.remove('active')});this.classList.add('active');navigate(this.dataset.p)})});
 
-function navigate(p){curPage=p;var m=$('#mainContent');m.innerHTML='<p style="text-align:center;padding:40px;color:#bbb;">加载中...</p>';if(p==='dash')dash().then(function(h){m.innerHTML=h});else if(p==='subs')subList().then(function(h){m.innerHTML=h});else if(p==='apps')appList().then(function(h){m.innerHTML=h});else if(p==='works')workList().then(function(h){m.innerHTML=h});else if(p==='cmts')cmtList().then(function(h){m.innerHTML=h})}
+async function navigate(p){
+curPage=p;var m=Q('#mainContent');m.innerHTML='<p style="text-align:center;padding:40px;color:#bbb;">加载中...</p>';
+try{
+if(p==='dash'){var s=await api('submissions?select=id,status');var a=await api('member_applications?select=id,status');var w=await api('works?select=id');var c=await api('comments?select=id');var v=await api('visits?select=id');var ps=s.filter(function(x){return x.status==='pending'}).length;var pa=a.filter(function(x){return x.status==='pending'}).length;m.innerHTML='<h2>仪表盘</h2><div class="stats"><div class="stat"><div class="n">'+s.length+'</div><div class="l">总投稿</div></div><div class="stat"><div class="n">'+ps+'</div><div class="l">待审核</div></div><div class="stat"><div class="n">'+a.length+'</div><div class="l">社员申请</div></div><div class="stat"><div class="n">'+pa+'</div><div class="l">待处理</div></div><div class="stat"><div class="n">'+w.length+'</div><div class="l">作品总数</div></div><div class="stat"><div class="n">'+c.length+'</div><div class="l">总评论</div></div><div class="stat"><div class="n">'+v.length+'</div><div class="l">网站访问</div></div></div><div style="background:var(--card);padding:16px;border-radius:var(--rd);"><button class="btn-p" onclick="navigate(\'subs\')">查看投稿</button> <button class="btn-p" style="background:var(--j);margin-left:8px;" onclick="navigate(\'apps\')">查看申请</button> <button class="btn-p" style="background:var(--g);margin-left:8px;" onclick="navigate(\'works\')">管理作品</button> <button class="btn-p" style="background:#6b5f52;margin-left:8px;" onclick="navigate(\'cmts\')">管理评论</button></div>'}
+else if(p==='subs'){m.innerHTML=await buildSubs()}
+else if(p==='apps'){m.innerHTML=await buildApps()}
+else if(p==='works'){m.innerHTML=await buildWorks()}
+else if(p==='cmts'){m.innerHTML=await buildCmts()}
+}catch(e){m.innerHTML='<p style="color:var(--r);text-align:center;padding:40px;">加载失败<br><button class="btn-p" onclick="navigate(\''+p+'\')">重试</button></p>'}
+}
 
-function dash(){return Promise.all([api('submissions?select=id,status'),api('member_applications?select=id,status'),api('works?select=id'),api('comments?select=id'),api('visits?select=id')]).then(function(r){var s=r[0],a=r[1],w=r[2],c=r[3],v=r[4];var ps=s.filter(function(x){return x.status==='pending'}).length;var pa=a.filter(function(x){return x.status==='pending'}).length;return '<h2>仪表盘</h2><div class="stats"><div class="stat"><div class="n">'+s.length+'</div><div class="l">总投稿</div></div><div class="stat"><div class="n">'+ps+'</div><div class="l">待审核</div></div><div class="stat"><div class="n">'+a.length+'</div><div class="l">社员申请</div></div><div class="stat"><div class="n">'+pa+'</div><div class="l">待处理</div></div><div class="stat"><div class="n">'+w.length+'</div><div class="l">作品总数</div></div><div class="stat"><div class="n">'+c.length+'</div><div class="l">总评论</div></div><div class="stat"><div class="n">'+v.length+'</div><div class="l">网站访问</div></div></div><div style="background:var(--card);padding:16px;border-radius:var(--rd);"><button class="btn-p" onclick="navigate(\'subs\')">查看投稿</button> <button class="btn-p" style="background:var(--j);margin-left:8px;" onclick="navigate(\'apps\')">查看申请</button> <button class="btn-p" style="background:var(--g);margin-left:8px;" onclick="navigate(\'works\')">管理作品</button> <button class="btn-p" style="background:#6b5f52;margin-left:8px;" onclick="navigate(\'cmts\')">管理评论</button></div>'})}
+async function buildSubs(f){
+var q='select=*&order=created_at.desc&limit=200';
+if(f)q+='&status=eq.'+f;
+var d=await api(q);
+var rows=d.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+esc(x.title)+'</strong></td><td>'+esc(x.name)+' · '+esc(x.grade)+'</td><td>'+esc(x.type)+'</td><td><span class="badge badge-'+(x.status||'pending')+'">'+sl(x.status)+'</span></td><td>'+fmt(x.created_at)+'</td><td><button class="btn-sm btn-v" onclick="viewItem(\'submissions\','+x.id+')">查看</button>'+(x.status!=='approved'?'<button class="btn-sm btn-a" onclick="setStatus(\'submissions\','+x.id+',\'approved\')">通过</button>':'')+(x.status!=='rejected'?'<button class="btn-sm btn-x" onclick="setStatus(\'submissions\','+x.id+',\'rejected\')">拒绝</button>':'')+'<button class="btn-sm btn-d" onclick="delItem(\'submissions\','+x.id+')">删除</button></td></tr>'}).join('')||'<tr><td colspan="7" style="text-align:center;padding:24px;color:#bbb;">暂无数据</td></tr>';
+return '<h2>投稿管理</h2><div class="topbar"><select onchange="filterSubs(this.value)"><option value="">全部状态</option><option value="pending"'+(f==='pending'?' selected':'')+'>待审核</option><option value="approved"'+(f==='approved'?' selected':'')+'>已通过</option><option value="rejected"'+(f==='rejected'?' selected':'')+'>已拒绝</option></select><button class="btn-p" style="background:var(--j);" onclick="exportCSV(\'submissions\')">导出CSV</button></div><div class="tbl"><table><thead><tr><th>#</th><th>标题</th><th>作者</th><th>类型</th><th>状态</th><th>时间</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
 
-function subList(f){curFilter=f||'';var q='select=*&order=created_at.desc&limit=200';if(f)q+='&status=eq.'+f;return api(q).then(function(d){var rows=d.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+esc(x.title)+'</strong></td><td>'+esc(x.name)+' · '+esc(x.grade)+'</td><td>'+esc(x.type)+'</td><td><span class="badge badge-'+(x.status||'pending')+'">'+sl(x.status)+'</span></td><td>'+fmt(x.created_at)+'</td><td><button class="btn-sm btn-v" onclick="viewItem(\'submissions\','+x.id+')">查看</button>'+(x.status!=='approved'?'<button class="btn-sm btn-a" onclick="setStatus(\'submissions\','+x.id+',\'approved\')">通过</button>':'')+(x.status!=='rejected'?'<button class="btn-sm btn-x" onclick="setStatus(\'submissions\','+x.id+',\'rejected\')">拒绝</button>':'')+'<button class="btn-sm btn-d" onclick="delItem(\'submissions\','+x.id+')">删除</button></td></tr>'}).join('')||'<tr><td colspan="7" style="text-align:center;padding:24px;color:#bbb;">暂无数据</td></tr>';return '<h2>投稿管理</h2><div class="topbar"><select onchange="subList(this.value).then(function(h){document.getElementById(\'mainContent\').innerHTML=h})"><option value="">全部状态</option><option value="pending"'+(f==='pending'?' selected':'')+'>待审核</option><option value="approved"'+(f==='approved'?' selected':'')+'>已通过</option><option value="rejected"'+(f==='rejected'?' selected':'')+'>已拒绝</option></select><button class="btn-p" style="background:var(--j);" onclick="exportCSV(\'submissions\')">导出CSV</button></div><div class="tbl"><table><thead><tr><th>#</th><th>标题</th><th>作者</th><th>类型</th><th>状态</th><th>时间</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div>'})}
+async function buildApps(f){
+var q='select=*&order=created_at.desc&limit=200';
+if(f)q+='&status=eq.'+f;
+var d=await api(q);
+var rows=d.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+esc(x.name)+'</strong></td><td>'+esc(x.email)+'</td><td>'+esc(x.grade)+'</td><td>'+(x.interest||'-')+'</td><td><span class="badge badge-'+(x.status||'pending')+'">'+sl(x.status)+'</span></td><td>'+fmt(x.created_at)+'</td><td><button class="btn-sm btn-v" onclick="viewItem(\'member_applications\','+x.id+')">查看</button>'+(x.status!=='approved'?'<button class="btn-sm btn-a" onclick="setStatus(\'member_applications\','+x.id+',\'approved\')">通过</button>':'')+(x.status!=='rejected'?'<button class="btn-sm btn-x" onclick="setStatus(\'member_applications\','+x.id+',\'rejected\')">拒绝</button>':'')+'<button class="btn-sm btn-d" onclick="delItem(\'member_applications\','+x.id+')">删除</button></td></tr>'}).join('')||'<tr><td colspan="8" style="text-align:center;padding:24px;color:#bbb;">暂无数据</td></tr>';
+return '<h2>社员申请</h2><div class="topbar"><select onchange="filterApps(this.value)"><option value="">全部状态</option><option value="pending"'+(f==='pending'?' selected':'')+'>待处理</option><option value="approved"'+(f==='approved'?' selected':'')+'>已通过</option><option value="rejected"'+(f==='rejected'?' selected':'')+'>已拒绝</option></select><button class="btn-p" style="background:var(--j);" onclick="exportCSV(\'member_applications\')">导出CSV</button></div><div class="tbl"><table><thead><tr><th>#</th><th>姓名</th><th>邮箱</th><th>年级</th><th>兴趣</th><th>状态</th><th>时间</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
 
-function appList(f){curFilter=f||'';var q='select=*&order=created_at.desc&limit=200';if(f)q+='&status=eq.'+f;return api(q).then(function(d){var rows=d.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+esc(x.name)+'</strong></td><td>'+esc(x.email)+'</td><td>'+esc(x.grade)+'</td><td>'+(x.interest||'-')+'</td><td><span class="badge badge-'+(x.status||'pending')+'">'+sl(x.status)+'</span></td><td>'+fmt(x.created_at)+'</td><td><button class="btn-sm btn-v" onclick="viewItem(\'member_applications\','+x.id+')">查看</button>'+(x.status!=='approved'?'<button class="btn-sm btn-a" onclick="setStatus(\'member_applications\','+x.id+',\'approved\')">通过</button>':'')+(x.status!=='rejected'?'<button class="btn-sm btn-x" onclick="setStatus(\'member_applications\','+x.id+',\'rejected\')">拒绝</button>':'')+'<button class="btn-sm btn-d" onclick="delItem(\'member_applications\','+x.id+')">删除</button></td></tr>'}).join('')||'<tr><td colspan="8" style="text-align:center;padding:24px;color:#bbb;">暂无数据</td></tr>';return '<h2>社员申请</h2><div class="topbar"><select onchange="appList(this.value).then(function(h){document.getElementById(\'mainContent\').innerHTML=h})"><option value="">全部状态</option><option value="pending"'+(f==='pending'?' selected':'')+'>待处理</option><option value="approved"'+(f==='approved'?' selected':'')+'>已通过</option><option value="rejected"'+(f==='rejected'?' selected':'')+'>已拒绝</option></select><button class="btn-p" style="background:var(--j);" onclick="exportCSV(\'member_applications\')">导出CSV</button></div><div class="tbl"><table><thead><tr><th>#</th><th>姓名</th><th>邮箱</th><th>年级</th><th>兴趣</th><th>状态</th><th>时间</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div>'})}
+async function buildWorks(){
+var d=await api('works?select=*&order=created_at.desc&limit=200');
+var rows=d.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+esc(x.title)+'</strong></td><td>'+esc(x.author)+' · '+(x.grade||'')+'</td><td>'+esc(x.category)+'</td><td>'+(x.likes||0)+'</td><td>'+fmt(x.created_at)+'</td><td><button class="btn-sm btn-e" onclick="editWork('+x.id+')">编辑</button><button class="btn-sm btn-v" onclick="viewItem(\'works\','+x.id+')">查看</button><button class="btn-sm btn-d" onclick="delItem(\'works\','+x.id+')">删除</button></td></tr>'}).join('')||'<tr><td colspan="7" style="text-align:center;padding:24px;color:#bbb;">暂无作品</td></tr>';
+return '<h2>作品管理</h2><div class="topbar"><button class="btn-p" onclick="showAddWork()">＋ 添加作品</button><button class="btn-p" style="background:var(--j);" onclick="navigate(\'works\')">刷新</button></div><div class="tbl"><table><thead><tr><th>#</th><th>标题</th><th>作者</th><th>类型</th><th>点赞</th><th>时间</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
 
-function workList(){return api('works?select=*&order=created_at.desc&limit=200').then(function(d){var rows=d.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+esc(x.title)+'</strong></td><td>'+esc(x.author)+' · '+(x.grade||'')+'</td><td>'+esc(x.category)+'</td><td>'+(x.likes||0)+'</td><td>'+fmt(x.created_at)+'</td><td><button class="btn-sm btn-e" onclick="editWork('+x.id+')">编辑</button><button class="btn-sm btn-v" onclick="viewItem(\'works\','+x.id+')">查看</button><button class="btn-sm btn-d" onclick="delItem(\'works\','+x.id+')">删除</button></td></tr>'}).join('')||'<tr><td colspan="7" style="text-align:center;padding:24px;color:#bbb;">暂无作品</td></tr>';return '<h2>作品管理</h2><div class="topbar"><button class="btn-p" onclick="showAddWork()">＋ 添加作品</button><button class="btn-p" style="background:var(--j);" onclick="navigate(\'works\')">刷新</button></div><div class="tbl"><table><thead><tr><th>#</th><th>标题</th><th>作者</th><th>类型</th><th>点赞</th><th>时间</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div>'})}
+async function buildCmts(){
+var d=await api('comments?select=*,works(title),profiles(display_name)&order=created_at.desc&limit=200');
+var rows=(d||[]).map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(x.profiles?x.profiles.display_name:'匿名')+'</td><td>'+esc(x.works?x.works.title:'已删除')+'</td><td>'+esc(x.content).substring(0,80)+'</td><td>'+fmt(x.created_at)+'</td><td><button class="btn-sm btn-d" onclick="delItem(\'comments\','+x.id+')">删除</button></td></tr>'}).join('')||'<tr><td colspan="6" style="text-align:center;padding:24px;color:#bbb;">暂无评论</td></tr>';
+return '<h2>评论管理</h2><div class="tbl"><table><thead><tr><th>#</th><th>用户</th><th>作品</th><th>内容</th><th>时间</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
 
-function cmtList(){return api('comments?select=*,works(title),profiles(display_name)&order=created_at.desc&limit=200').then(function(d){var rows=(d||[]).map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(x.profiles?x.profiles.display_name:'匿名')+'</td><td>'+esc(x.works?x.works.title:'已删除')+'</td><td>'+esc(x.content).substring(0,80)+'</td><td>'+fmt(x.created_at)+'</td><td><button class="btn-sm btn-d" onclick="delItem(\'comments\','+x.id+')">删除</button></td></tr>'}).join('')||'<tr><td colspan="6" style="text-align:center;padding:24px;color:#bbb;">暂无评论</td></tr>';return '<h2>评论管理</h2><div class="tbl"><table><thead><tr><th>#</th><th>用户</th><th>作品</th><th>内容</th><th>时间</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div>'})}
+async function filterSubs(f){Q('#mainContent').innerHTML=await buildSubs(f)}
+async function filterApps(f){Q('#mainContent').innerHTML=await buildApps(f)}
 
-function viewItem(table,id){api(table+'?id=eq.'+id+'&select=*').then(function(d){if(!d||!d.length)return;var x=d[0];var ex=['id','created_at','updated_at'];var html='<button class="modal-close" onclick="closeModal()">&times;</button><h3>详情</h3>';Object.entries(x).filter(function(e){return ex.indexOf(e[0])===-1}).forEach(function(e){var v=e[1]===null?'':String(e[1]);if(e[0]==='content'||v.length>200)html+='<div class="info-line"><strong>'+esc(e[0])+'：</strong></div><div class="content-block">'+esc(v)+'</div>';else html+='<div class="info-line"><strong>'+esc(e[0])+'：</strong> '+esc(v.substring(0,200))+'</div>'});$('#modalBox').innerHTML=html;$('#modal').classList.add('open')})}
+async function viewItem(table,id){var d=await api(table+'?id=eq.'+id+'&select=*');if(!d||!d.length)return;var x=d[0];var ex=['id','created_at','updated_at'];var html='<button class="modal-close" onclick="closeModal()">&times;</button><h3>详情</h3>';Object.entries(x).filter(function(e){return ex.indexOf(e[0])===-1}).forEach(function(e){var v=e[1]===null?'':String(e[1]);if(e[0]==='content'||v.length>200)html+='<div class="info-line"><strong>'+esc(e[0])+'：</strong></div><div class="content-block">'+esc(v)+'</div>';else html+='<div class="info-line"><strong>'+esc(e[0])+'：</strong> '+esc(v.substring(0,200))+'</div>'});Q('#modalBox').innerHTML=html;Q('#modal').classList.add('open')}
 
-function setStatus(table,id,status){fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'PATCH',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({status:status})}).then(function(){toast('已更新');navigate(curPage)})}
-function delItem(table,id){if(!confirm('确定删除？不可恢复！'))return;fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'DELETE',headers:{'apikey':SB_KEY}}).then(function(){toast('已删除');navigate(curPage)})}
+async function setStatus(table,id,status){await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'PATCH',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({status:status})});toast('已更新');navigate(curPage)}
+async function delItem(table,id){if(!confirm('确定删除？不可恢复！'))return;await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+id,{method:'DELETE',headers:{'apikey':SB_KEY}});toast('已删除');navigate(curPage)}
 
-function editWork(id){api('works?id=eq.'+id+'&select=*').then(function(d){if(!d||!d.length)return;var w=d[0];$('#modalBox').innerHTML='<button class="modal-close" onclick="closeModal()">&times;</button><h3>编辑作品</h3><form onsubmit="saveWork(event,'+id+')"><div class="fg"><label>标题</label><input id="ew_title" value="'+esc(w.title)+'" required></div><div class="fg-row"><div class="fg"><label>作者</label><input id="ew_author" value="'+esc(w.author)+'" required></div><div class="fg"><label>年级</label><input id="ew_grade" value="'+esc(w.grade||'')+'"></div></div><div class="fg-row"><div class="fg"><label>班级</label><input id="ew_class" value="'+esc(w.class_name||'')+'"></div><div class="fg"><label>类型</label><select id="ew_cat"><option value="prose"'+(w.category==='prose'?' selected':'')+'>散文</option><option value="poetry"'+(w.category==='poetry'?' selected':'')+'>诗歌</option><option value="fiction"'+(w.category==='fiction'?' selected':'')+'>小说</option><option value="essay"'+(w.category==='essay'?' selected':'')+'>随笔</option></select></div></div><div class="fg"><label>封面图片URL</label><input id="ew_img" value="'+esc(w.image_url||'')+'"></div><div class="fg"><label>摘要</label><textarea id="ew_excerpt" rows="2">'+esc(w.excerpt||'')+'</textarea></div><div class="fg"><label>内容</label><textarea id="ew_content" rows="6" required>'+esc(w.content||'')+'</textarea></div><button type="submit" class="btn-p" style="width:100%;">保存</button></form>';$('#modal').classList.add('open')})}
+async function editWork(id){var d=await api('works?id=eq.'+id+'&select=*');if(!d||!d.length)return;var w=d[0];Q('#modalBox').innerHTML='<button class="modal-close" onclick="closeModal()">&times;</button><h3>编辑作品</h3><form onsubmit="return saveWork(event,'+id+')"><div class="fg"><label>标题</label><input id="ew_title" value="'+esc(w.title)+'" required></div><div class="fg-row"><div class="fg"><label>作者</label><input id="ew_author" value="'+esc(w.author)+'" required></div><div class="fg"><label>年级</label><input id="ew_grade" value="'+esc(w.grade||'')+'"></div></div><div class="fg-row"><div class="fg"><label>班级</label><input id="ew_class" value="'+esc(w.class_name||'')+'"></div><div class="fg"><label>类型</label><select id="ew_cat"><option value="prose"'+(w.category==='prose'?' selected':'')+'>散文</option><option value="poetry"'+(w.category==='poetry'?' selected':'')+'>诗歌</option><option value="fiction"'+(w.category==='fiction'?' selected':'')+'>小说</option><option value="essay"'+(w.category==='essay'?' selected':'')+'>随笔</option></select></div></div><div class="fg"><label>封面图片URL</label><input id="ew_img" value="'+esc(w.image_url||'')+'"></div><div class="fg"><label>摘要</label><textarea id="ew_excerpt" rows="2">'+esc(w.excerpt||'')+'</textarea></div><div class="fg"><label>内容</label><textarea id="ew_content" rows="6" required>'+esc(w.content||'')+'</textarea></div><button type="submit" class="btn-p" style="width:100%;">保存</button></form>';Q('#modal').classList.add('open')}
 
-function showAddWork(){$('#modalBox').innerHTML='<button class="modal-close" onclick="closeModal()">&times;</button><h3>添加作品</h3><form onsubmit="addWork(event)"><div class="fg"><label>标题</label><input id="aw_title" required></div><div class="fg-row"><div class="fg"><label>作者</label><input id="aw_author" required></div><div class="fg"><label>年级</label><input id="aw_grade"></div></div><div class="fg-row"><div class="fg"><label>班级</label><input id="aw_class"></div><div class="fg"><label>类型</label><select id="aw_cat"><option value="prose">散文</option><option value="poetry">诗歌</option><option value="fiction">小说</option><option value="essay">随笔</option></select></div></div><div class="fg"><label>封面图片URL</label><input id="aw_img"></div><div class="fg"><label>摘要</label><textarea id="aw_excerpt" rows="2"></textarea></div><div class="fg"><label>内容</label><textarea id="aw_content" rows="6" required></textarea></div><button type="submit" class="btn-p" style="width:100%;">添加</button></form>';$('#modal').classList.add('open')}
+function showAddWork(){Q('#modalBox').innerHTML='<button class="modal-close" onclick="closeModal()">&times;</button><h3>添加作品</h3><form onsubmit="return addWork(event)"><div class="fg"><label>标题</label><input id="aw_title" required></div><div class="fg-row"><div class="fg"><label>作者</label><input id="aw_author" required></div><div class="fg"><label>年级</label><input id="aw_grade"></div></div><div class="fg-row"><div class="fg"><label>班级</label><input id="aw_class"></div><div class="fg"><label>类型</label><select id="aw_cat"><option value="prose">散文</option><option value="poetry">诗歌</option><option value="fiction">小说</option><option value="essay">随笔</option></select></div></div><div class="fg"><label>封面图片URL</label><input id="aw_img"></div><div class="fg"><label>摘要</label><textarea id="aw_excerpt" rows="2"></textarea></div><div class="fg"><label>内容</label><textarea id="aw_content" rows="6" required></textarea></div><button type="submit" class="btn-p" style="width:100%;">添加</button></form>';Q('#modal').classList.add('open')}
 
-function saveWork(e,id){e.preventDefault();var body={title:$('#ew_title').value,author:$('#ew_author').value,grade:$('#ew_grade').value,class_name:$('#ew_class').value,category:$('#ew_cat').value,image_url:$('#ew_img').value,excerpt:$('#ew_excerpt').value,content:$('#ew_content').value};fetch(SB_URL+'/rest/v1/works?id=eq.'+id,{method:'PATCH',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(){closeModal();toast('已更新');navigate('works')})}
-function addWork(e){e.preventDefault();var body={title:$('#aw_title').value,author:$('#aw_author').value,grade:$('#aw_grade').value,class_name:$('#aw_class').value,category:$('#aw_cat').value,image_url:$('#aw_img').value,excerpt:$('#aw_excerpt').value,content:$('#aw_content').value,likes:0,published:true};fetch(SB_URL+'/rest/v1/works',{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(){closeModal();toast('作品已添加');navigate('works')})}
+async function saveWork(e,id){e.preventDefault();var body={title:Q('#ew_title').value,author:Q('#ew_author').value,grade:Q('#ew_grade').value,class_name:Q('#ew_class').value,category:Q('#ew_cat').value,image_url:Q('#ew_img').value,excerpt:Q('#ew_excerpt').value,content:Q('#ew_content').value};await fetch(SB_URL+'/rest/v1/works?id=eq.'+id,{method:'PATCH',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});closeModal();toast('已更新');navigate('works')}
+async function addWork(e){e.preventDefault();var body={title:Q('#aw_title').value,author:Q('#aw_author').value,grade:Q('#aw_grade').value,class_name:Q('#aw_class').value,category:Q('#aw_cat').value,image_url:Q('#aw_img').value,excerpt:Q('#aw_excerpt').value,content:Q('#aw_content').value,likes:0,published:true};await fetch(SB_URL+'/rest/v1/works',{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});closeModal();toast('作品已添加');navigate('works')}
 
-function closeModal(){$('#modal').classList.remove('open')}
-$('#modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+function closeModal(){Q('#modal').classList.remove('open')}
+Q('#modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
 
-function exportCSV(table){api(table+'?select=*&limit=1000').then(function(d){if(!d||!d.length)return toast('无数据','err');var headers=Object.keys(d[0]).filter(function(k){return k!=='id'&&k!=='updated_at'});var csv=headers.join(',')+'\n';d.forEach(function(r){csv+=headers.map(function(h){return '"'+String(r[h]||'').replace(/"/g,'""')+'"'}).join(',')+'\n'});var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=table+'_'+new Date().toISOString().slice(0,10)+'.csv';a.click();toast('导出成功')})}
+async function exportCSV(table){var d=await api(table+'?select=*&limit=1000');if(!d||!d.length)return toast('无数据','err');var headers=Object.keys(d[0]).filter(function(k){return k!=='id'&&k!=='updated_at'});var csv=headers.join(',')+'\n';d.forEach(function(r){csv+=headers.map(function(h){return '"'+String(r[h]||'').replace(/"/g,'""')+'"'}).join(',')+'\n'});var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=table+'_'+new Date().toISOString().slice(0,10)+'.csv';a.click();toast('导出成功')}
 
 if(sessionStorage.getItem('admin_ok')==='1')showApp();
-</script>
-</body>
-</html>=setStatus;window.delItem=delItem;window.editWork=editWork;window.showAddWork=showAddWork;window.closeModal=closeModal;window.exportCSV=exportCSV;window.doLogout=doLogout;window.navigate=navigate;
-
-if(sessionStorage.getItem('admin_ok')==='1')showApp();
-})();
 </script>
 </body>
 </html>
