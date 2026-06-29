@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>登录 · 新笔文学社</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#faf7f0;--card:#fff;--t:#2c2416;--s:#8b7e6c;:#b483;d8c8{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC','Songti SC',serif;background:var(--bg);color:varmin-height:100vh;display:flex;align-items:center;justify-content:center;padding:px;position:relativeoverflow:hidden}
+bodybefore{content:'';position:fixed:0;:none;opacity:.02;background:-gradient(circle at 20% 30%,#1a1410 1px,transparent 1px),radial-gradient(circle at 80% 70%,#1a1410 1px,transparent 1px);background-size:160px 160px,200px 200px}
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+.particle{position:absolute;border-radius:50%;background:var(--g);animation:drift linear infinite;opacity:0}
+@keyframes drift{0%{transform:translateY(105vh) scale(0);opacity:0}15%{opacity:.4}85%{opacity:.15}100%{transform:translateY(-10vh) translateX(30px) scale(1);opacity:0}}
+.card{position:relative;z-index:2;background:var(--card);padding:40px 30px;border-radius:18px;box-shadow:0 8px 40px rgba(28,20,12,.08);width:100%;max-width:400px;border:1px solid var(--b)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--g),var(--r),var(--g),transparent);border-radius:18px 18px 0 0}
+.logo{text-align:center;margin-bottom:24px}
+.logo i{font-size:2.5rem;color:var(--r);animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.logo h1{font-size:1.3rem;letter-spacing:4px;color:var(--t);margin:8px 0 2px}.logo .sub{font-size:.75rem;color:var(--s);letter-spacing:3px}
+.tabs{display:flex;border-bottom:2px solid #f0e8d8;margin-bottom:22px}
+.tabs button{flex:1;padding:10px;border:none;background:none;font-weight:700;font-size:.95rem;cursor:pointer;color:var(--s);letter-spacing:2px;font-family:inherit;transition:.3s}
+.tabs button.active{color:var(--r);position:relative}.tabs button.active::after{content:'';position:absolute;bottom:-2px;left:25%;right:25%;height:2px;background:var(--r)}
+.fg{margin-bottom:14px}.fg label{display:block;font-weight:700;font-size:.8rem;margin-bottom:5px;letter-spacing:1px}
+.fg input{width:100%;padding:12px 14px;border:1.5px solid var(--b);border-radius:10px;font-size:.95rem;font-family:inherit;background:#fdfcf8;transition:.35s}
+.fg input:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 5px rgba(184,150,74,.06);background:#fff}
+.pw-wrap{position:relative}.pw-wrap .eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#c4b896;font-size:.85rem;transition:.3s;background:none;border:none;padding:4px}
+.pw-wrap .eye:hover{color:var(--r)}
+.btn{width:100%;padding:13px;background:var(--r);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;letter-spacing:2px;font-family:inherit;transition:.35s;position:relative;overflow:hidden}
+.btn:hover{background:#6b2a2a;transform:translateY(-2px);box-shadow:0 8px 25px rgba(139,58,58,.25)}
+.btn:disabled{opacity:.6;transform:none;box-shadow:none}
+.err{color:var(--r);font-size:.8rem;text-align:center;margin-top:8px;display:none}
+.switch{text-align:center;margin-top:16px;font-size:.82rem;color:var(--s)}.switch a{color:var(--r);font-weight:700;cursor:pointer;text-decoration:none}.switch a:hover{text-decoration:underline}
+.links{text-align:center;margin-top:20px;font-size:.78rem}.links a{color:var(--s);text-decoration:none;margin:0 6px}.links a:hover{color:var(--r)}
+.forgot{text-align:right;margin-bottom:14px;font-size:.78rem;color:var(--s);cursor:pointer;text-decoration:underline}.forgot:hover{color:var(--r)}
+.toast{position:fixed;top:16px;right:16px;z-index:999;padding:10px 18px;border-radius:8px;color:#fff;font-weight:700;font-size:.85rem;opacity:0;transition:.35s;pointer-events:none}.toast.show{opacity:1}.toast-ok{background:#5b7a6a}.toast-err{background:var(--r)}
+@media(max-width:400px){.card{padding:28px 18px}}
+</style>
+</head>
+<body>
+<div class="particles" id="particles"></div>
+<div class="toast" id="toast"></div>
+
+<div class="card">
+<div class="logo"><i class="fas fa-feather-alt"></i><h1>新笔文学社</h1><p class="sub">以文会友 · 以笔写心</p></div>
+<div class="tabs"><button class="active" onclick="switchTab('login')">登 录</button><button onclick="switchTab('register')">注 册</button></div>
+<form id="authForm" onsubmit="handleSubmit(event)">
+<div class="fg" id="fgUser" style="display:none"><label>用户名</label><input id="authUser" placeholder="给自己起个笔名" maxlength="20"></div>
+<div class="fg"><label>邮箱</label><input type="email" id="authEmail" placeholder="请输入邮箱" required></div>
+<div class="fg"><label>密码</label><div class="pw-wrap"><input type="password" id="authPass" placeholder="至少6位" required minlength="6"><button type="button" class="eye" onclick="togglePw()" tabindex="-1"><i class="fas fa-eye"></i></button></div></div>
+<p class="forgot" id="forgotLink" onclick="forgotPw()">忘记密码？</p>
+<button type="submit" class="btn" id="submitBtn">登 录</button>
+<p class="err" id="formErr"></p>
+</form>
+<p class="switch" id="switchText">没有账号？<a onclick="switchTab('register')">立即注册</a></p>
+</div>
+<p class="links"><a href="index.html">← 返回首页</a> · <a href="admin.html">管理后台</a></p>
+
+<script>
+(function(){
+const SB_URL='https://aybnmewinjckmftvctvx.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE';
+const $=s=>document.querySelector(s);
+let mode='login';
+
+for(let i=0;i<20;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*3+1.5;Object.assign(p.style,{width:s+'px',height:s+'px',left:Math.random()*100+'%',animationDelay:Math.random()*8+'s',animationDuration:Math.random()*7+5+'s'});$('#particles').appendChild(p)}
+
+function toast(m,t){const e=$('#toast');e.textContent=m;e.className='toast toast-'+(t||'ok')+' show';setTimeout(()=>e.classList.remove('show'),2500){modedocument.querySelectorabs>{active===m==='register'))});$('#fgUser').style.display=m==='register'?'':'none';$('#submitBtn').textContent=m==='login'?'登 录':'注 册';$('#forgotLink').style.display=m==='login'?'':'none';$('#switchText').innerHTML=m==='login'?'没有账号？<a onclick="switchTab(\'register\')">立即注册</a>':'已有账号？<a onclick="switchTab(\'login\')">去登录</a>';$('#formErr').style.display='none'};
+
+window.forgotPw=async function(){const email=$('#authEmail').value.trim();if(!email){toast('请先输入邮箱地址','err');return}const r=await fetch(SB_URL+'/auth/v1/recover',{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({email})});if(r.ok){toast('重置邮件已发送，请检查邮箱')}else{toast('发送失败，请稍后再试','err')}};
+
+window.handleSubmit=async function(e){
+e.preventDefault();$('#formErr').style.display='none';
+const email=$('#authEmail').value.trim(),pass=$('#authPass').value,user=$('#authUser').value.trim();
+if(!email||!pass){$('#formErr').textContent='请填写邮箱和密码';$('#formErr').style.display='block';return}
+if(pass.length<6){$('#formErr').textContent='密码至少6位';$('#formErr').style.display='block';return}
+if(mode==='register'&&!user){$('#formErr').textContent='请输入用户名';$('#formErr').style.display='block';return}
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$('#formErr').textContent='邮箱格式不正确';$('#formErr').style.display='block';return}
+const btn=$('#submitBtn');btn.disabled=true;btn.textContent='处理中...';
+try{
+if(mode==='register'){
+const r=await fetch(SB_URL+'/auth/v1/signup',{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+if(!r.ok){const e=await r.json();throw new Error(e.msg||'注册失败')}
+const d=await r.json();
+await fetch(SB_URL+'/rest/v1/profiles',{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+d.access_token,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify({id:d.user.id,username:user,display_name:user})});
+toast('注册成功！请登录');switchTab('login');
+}else{
+const r=await fetch(SB_URL+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+if(!r.ok){const e=await r.json();throw new Error(e.error_description||'邮箱或密码错误')}
+const d=await r.json();
+sessionStorage.setItem('sb_token',d.access_token);sessionStorage.setItem('sb_refresh_token',d.refresh_token);
+const ur=await fetch(SB_URL+'/auth/v1/user',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+d.access_token}});
+if(ur.ok){const u=await ur.json();sessionStorage.setItem('sb_user',JSON.stringify(u))}
+toast('登录成功！');setTimeout(()=>{window.location.href='index.html'},800);
+}
+}catch(err){$('#formErr').textContent=err.message;$('#formErr').style.display='block'}finally{btn.disabled=false;btn.textContent=mode==='login'?'登 录':'注 册'}
+};
+
+// 初始状态
+$('#forgotLink').style.display = '';
+})();
+</script>
+</body>
+</html>
