@@ -23,7 +23,7 @@ body{font-family:'Noto Serif SC','Songti SC',serif;background:var(--bg);color:va
 .pw-w{position:relative}.pw-w .eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#c4b896;font-size:.85rem;transition:.3s;background:none;border:none;padding:4px}.pw-w .eye:hover{color:var(--r)}
 .btn{width:100%;padding:13px;background:var(--r);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;letter-spacing:2px;font-family:inherit;transition:.35s}
 .btn:hover{background:#6b2a2a;transform:translateY(-2px);box-shadow:0 8px 25px rgba(139,58,58,.25)}
-.btn:disabled{opacity:.6;transform:none;box-shadow:none;cursor:not-allowed}
+.btn:disabled{opacity:.6;transform:none;box-shadow:none}
 .err{color:var(--r);font-size:.8rem;text-align:center;margin-top:8px;display:none}
 .switch{text-align:center;margin-top:16px;font-size:.82rem;color:var(--s)}.switch a{color:var(--r);font-weight:700;cursor:pointer;text-decoration:none}.switch a:hover{text-decoration:underline}
 .links{text-align:center;margin-top:20px;font-size:.78rem}.links a{color:var(--s);text-decoration:none;margin:0 6px}.links a:hover{color:var(--r)}
@@ -39,9 +39,9 @@ body{font-family:'Noto Serif SC','Songti SC',serif;background:var(--bg);color:va
 <div class="logo"><i class="fas fa-feather-alt"></i><h1>新笔文学社</h1><p class="sub">以文会友 · 以笔写心</p></div>
 <div class="tabs"><button class="active" id="tbL" onclick="sw('login')">登 录</button><button id="tbR" onclick="sw('register')">注 册</button></div>
 <form id="af" onsubmit="return hs(event)">
-<div class="fg" id="fgU" style="display:none"><label>用户名</label><input type="text" id="aU" placeholder="给自己起个笔名" maxlength="20" autocomplete="off"></div>
-<div class="fg"><label>邮箱</label><input type="email" id="aE" placeholder="请输入邮箱" required autocomplete="email"></div>
-<div class="fg"><label>密码</label><div class="pw-w"><input type="password" id="aP" placeholder="至少6位" required minlength="6" autocomplete="current-password"><button type="button" class="eye" onclick="tp()" aria-label="切换密码可见性"><i class="fas fa-eye"></i></button></div></div>
+<div class="fg" id="fgU" style="display:none"><label>用户名</label><input id="aU" placeholder="给自己起个笔名" maxlength="20"></div>
+<div class="fg"><label>邮箱</label><input type="email" id="aE" placeholder="请输入邮箱" required></div>
+<div class="fg"><label>密码</label><div class="pw-w"><input type="password" id="aP" placeholder="至少6位" required minlength="6"><button type="button" class="eye" onclick="tp()"><i class="fas fa-eye"></i></button></div></div>
 <p class="fp" id="fpL" onclick="fp()">忘记密码？</p>
 <button type="submit" class="btn" id="sBtn">登 录</button>
 <p class="err" id="fErr"></p>
@@ -51,107 +51,30 @@ body{font-family:'Noto Serif SC','Songti SC',serif;background:var(--bg);color:va
 <p class="links"><a href="index.html">← 返回首页</a> · <a href="admin.html">管理后台</a></p>
 
 <script>
-/* ============================================================
-   配置区（注意：生产环境请使用后端鉴权，切勿将密钥暴露在前端）
-   ============================================================ */
 var SBU='https://aybnmewinjckmftvctvx.supabase.co';
 var SBK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE';
 var mode='login';
-
 function Q(s){return document.querySelector(s)}
 function toast(m,t){var e=Q('#toast');e.textContent=m;e.className='toast toast-'+(t||'ok')+' show';setTimeout(function(){e.classList.remove('show')},2500)}
-function tp(){
-  var i=Q('#aP'),e=document.querySelector('.eye i');
-  if(i.type==='password'){i.type='text';e.className='fas fa-eye-slash'}
-  else{i.type='password';e.className='fas fa-eye'}
-}
+function tp(){var i=Q('#aP'),e=document.querySelector('.eye i');if(i.type==='password'){i.type='text';e.className='fas fa-eye-slash'}else{i.type='password';e.className='fas fa-eye'}}
 
-function getErr(d){
-  return d.msg || d.error_description || d.error || d.message || '操作失败';
-}
+function sw(m){mode=m;Q('#tbL').classList.toggle('active',m==='login');Q('#tbR').classList.toggle('active',m==='register');Q('#fgU').style.display=m==='register'?'':'none';Q('#sBtn').textContent=m==='login'?'登 录':'注 册';Q('#fpL').style.display=m==='login'?'':'none';Q('#swT').innerHTML=m==='login'?'没有账号？<a onclick="sw(\'register\')">立即注册</a>':'已有账号？<a onclick="sw(\'login\')">去登录</a>';Q('#fErr').style.display='none'}
 
-function sw(m){
-  mode=m;
-  Q('#tbL').classList.toggle('active',m==='login');
-  Q('#tbR').classList.toggle('active',m==='register');
-  Q('#fgU').style.display=m==='register'?'':'none';
-  Q('#sBtn').textContent=m==='login'?'登 录':'注 册';
-  Q('#fpL').style.display=m==='login'?'':'none';
-  Q('#swT').innerHTML=m==='login'?'没有账号？<a onclick="sw('register')">立即注册</a>':'已有账号？<a onclick="sw('login')">去登录</a>';
-  Q('#fErr').style.display='none';
-  Q('#aE').value='';
-  Q('#aP').value='';
-  Q('#aU').value='';
-}
+function fp(){var e=Q('#aE').value.trim();if(!e){toast('请先输入邮箱地址','err');return}fetch(SBU+'/auth/v1/recover',{method:'POST',headers:{'apikey':SBK,'Content-Type':'application/json'},body:JSON.stringify({email:e})}).then(function(r){if(r.ok)toast('重置邮件已发送');else toast('发送失败','err')})}
 
-function fp(){
-  var e=Q('#aE').value.trim();
-  if(!e){toast('请先输入邮箱地址','err');return}
-  fetch(SBU+'/auth/v1/recover',{method:'POST',headers:{'apikey':SBK,'Content-Type':'application/json'},body:JSON.stringify({email:e})})
-    .then(function(r){
-      if(r.ok){toast('重置邮件已发送')}
-      else{r.json().then(function(d){toast(getErr(d)||'发送失败','err')}).catch(function(){toast('发送失败','err')})}
-    })
-    .catch(function(){toast('网络错误，请重试','err')});
-}
+function hs(e){e.preventDefault();Q('#fErr').style.display='none';
+var em=Q('#aE').value.trim(),pw=Q('#aP').value,un=Q('#aU').value.trim();
+if(!em||!pw){Q('#fErr').textContent='请填写邮箱和密码';Q('#fErr').style.display='block';return false}
+if(pw.length<6){Q('#fErr').textContent='密码至少6位';Q('#fErr').style.display='block';return false}
+if(mode==='register'&&!un){Q('#fErr').textContent='请输入用户名';Q('#fErr').style.display='block';return false}
+var btn=Q('#sBtn');btn.disabled=true;btn.textContent='处理中...';
 
-function hs(e){
-  e.preventDefault();
-  Q('#fErr').style.display='none';
-  var em=Q('#aE').value.trim(),pw=Q('#aP').value,un=Q('#aU').value.trim();
-  if(!em||!pw){Q('#fErr').textContent='请填写邮箱和密码';Q('#fErr').style.display='block';return false}
-  if(pw.length<6){Q('#fErr').textContent='密码至少6位';Q('#fErr').style.display='block';return false}
-  if(mode==='register'&&!un){Q('#fErr').textContent='请输入用户名';Q('#fErr').style.display='block';return false}
-  var btn=Q('#sBtn');btn.disabled=true;btn.textContent='处理中...';
-
-  if(mode==='register'){
-    fetch(SBU+'/auth/v1/signup',{method:'POST',headers:{'apikey':SBK,'Content-Type':'application/json'},body:JSON.stringify({email:em,password:pw})})
-      .then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(getErr(d)||'注册失败');return d})})
-      .then(function(d){
-        // 如果启用了邮箱确认，signup 不会返回 access_token 和 user
-        if(!d.user || !d.access_token){
-          toast('注册成功！请查看邮箱完成验证');
-          sw('login');
-          btn.disabled=false;btn.textContent='登 录';
-          return;
-        }
-        return fetch(SBU+'/rest/v1/profiles',{method:'POST',headers:{'apikey':SBK,'Authorization':'Bearer '+d.access_token,'Content-Type':'application/json'},body:JSON.stringify({id:d.user.id,username:un,display_name:un})})
-          .then(function(r){
-            if(!r.ok) return r.json().then(function(d){throw new Error(getErr(d)||'创建资料失败')});
-          });
-      })
-      .then(function(){
-        toast('注册成功！请登录');
-        sw('login');
-        btn.disabled=false;btn.textContent='登 录';
-      })
-      .catch(function(e){
-        Q('#fErr').textContent=e.message;
-        Q('#fErr').style.display='block';
-        btn.disabled=false;btn.textContent='注 册';
-      });
-  }else{
-    fetch(SBU+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'apikey':SBK,'Content-Type':'application/json'},body:JSON.stringify({email:em,password:pw})})
-      .then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(getErr(d)||'邮箱或密码错误');return d})})
-      .then(function(d){
-        sessionStorage.setItem('sb_token',d.access_token);
-        sessionStorage.setItem('sb_refresh_token',d.refresh_token);
-        return fetch(SBU+'/auth/v1/user',{headers:{'apikey':SBK,'Authorization':'Bearer '+d.access_token}})
-          .then(function(r){
-            if(!r.ok) throw new Error('获取用户信息失败');
-            return r.json();
-          })
-          .then(function(u){sessionStorage.setItem('sb_user',JSON.stringify(u))});
-      })
-      .then(function(){toast('登录成功！');setTimeout(function(){window.location.href='index.html'},800)})
-      .catch(function(e){
-        Q('#fErr').textContent=e.message;
-        Q('#fErr').style.display='block';
-        btn.disabled=false;btn.textContent='登 录';
-      });
-  }
-  return false;
+if(mode==='register'){
+fetch(SBU+'/auth/v1/signup',{method:'POST',headers:{'apikey':SBK,'Content-Type':'application/json'},body:JSON.stringify({email:em,password:pw})}).then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.msg||'注册失败');return d})}).then(function(d){return fetch(SBU+'/rest/v1/profiles',{method:'POST',headers:{'apikey':SBK,'Authorization':'Bearer '+d.access_token,'Content-Type':'application/json'},body:JSON.stringify({id:d.user.id,username:un,display_name:un})})}).then(function(){toast('注册成功！请登录');sw('login');btn.disabled=false;btn.textContent='登 录'}).catch(function(e){Q('#fErr').textContent=e.message;Q('#fErr').style.display='block';btn.disabled=false;btn.textContent='注 册'});
+}else{
+fetch(SBU+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'apikey':SBK,'Content-Type':'application/json'},body:JSON.stringify({email:em,password:pw})}).then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.error_description||'邮箱或密码错误');return d})}).then(function(d){sessionStorage.setItem('sb_token',d.access_token);sessionStorage.setItem('sb_refresh_token',d.refresh_token);return fetch(SBU+'/auth/v1/user',{headers:{'apikey':SBK,'Authorization':'Bearer '+d.access_token}}).then(function(r){return r.json()}).then(function(u){sessionStorage.setItem('sb_user',JSON.stringify(u))})}).then(function(){toast('登录成功！');setTimeout(function(){window.location.href='index.html'},800)}).catch(function(e){Q('#fErr').textContent=e.message;Q('#fErr').style.display='block';btn.disabled=false;btn.textContent='登 录'});
 }
+return false}
 </script>
 </body>
 </html>
