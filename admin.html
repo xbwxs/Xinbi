@@ -1,144 +1,1641 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>管理后台 · 新笔文学社</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:sans-serif;background:#f5f1e8;color:#2c2416;min-height:100vh}
-.lp{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.lc{background:#fff;padding:40px 28px;border-radius:16px;width:100%;max-width:380px;text-align:center;border:1px solid #ddd}
-.lc h1{font-size:1.3rem;color:#8b3a3a;margin-bottom:6px}
-.lc p{font-size:.85rem;color:#888;margin-bottom:24px}
-.lc input{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:1rem;text-align:center;margin-bottom:14px}
-.lc button{width:100%;padding:12px;background:#8b3a3a;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer}
-.lc button:hover{background:#6b2a2a}.lc button:disabled{opacity:.5}
-.lc .err{color:#8b3a3a;font-size:.85rem;margin-top:8px;display:none}
-.app{display:none}.app.show{display:flex}
-.sb{width:200px;background:#1a1410;color:#ccc;min-height:100vh;padding:20px 0;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:10}
-.sb h2{font-size:.9rem;text-align:center;padding:0 16px 16px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:12px}
-.sb a{display:flex;align-items:center;gap:8px;padding:10px 18px;color:#999;text-decoration:none;font-size:.85rem;border-left:3px solid transparent}
-.sb a:hover,.sb a.on{color:#d4a040;background:rgba(255,255,255,.03);border-left-color:#d4a040}
-.sb a.o2{color:#8b3a3a}
-.mn{margin-left:200px;flex:1;padding:24px 28px;min-height:100vh}
-.mn h2{font-size:1.3rem;color:#8b3a3a;margin-bottom:20px}
-.st{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:24px}
-.st>div{background:#fff;padding:16px;border-radius:12px;text-align:center}
-.st .n{font-size:2rem;font-weight:900;color:#8b3a3a}.st .l{font-size:.8rem;color:#888;margin-top:4px}
-.tb{background:#fff;border-radius:12px;overflow-x:auto}
-.tb table{width:100%;border-collapse:collapse;font-size:.82rem}
-.tb th{background:#f9f6f0;padding:10px 12px;text-align:left;font-weight:700;font-size:.75rem;color:#888;border-bottom:2px solid #ddd}
-.tb td{padding:8px 12px;border-bottom:1px solid #eee}
-.bd{display:inline-block;padding:3px 12px;border-radius:14px;font-size:.72rem;font-weight:700}
-.bd0{background:#fef3c7;color:#92400e}.bd1{background:#d1fae5;color:#065f46}.bd2{background:#fee2e2;color:#991b1b}
-.bb{padding:5px 12px;border-radius:14px;border:none;cursor:pointer;font-size:.72rem;font-weight:700;margin:2px}.bb:hover{opacity:.7}
-.b1{background:#dbeafe;color:#1e40af}.b2{background:#d1fae5;color:#065f46}.b3{background:#fee2e2;color:#991b1b}.b4{background:#f3f4f6;color:#6b7280}.b5{background:#e0e7ff;color:#3730a3}
-.bt{padding:10px 22px;background:#8b3a3a;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.85rem;margin:3px;cursor:pointer}.bt:hover{background:#6b2a2a}
-.bg{background:#5b7a6a}.by{background:#b8964a}.bk{background:#6b5f52}
-.tr{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
-.tr select{padding:8px 14px;border:1px solid #ddd;border-radius:8px;font-size:.85rem;background:#fff}
-.mo{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px}.mo.show{display:flex}
-.mb{background:#fff;padding:26px 22px;border-radius:14px;max-width:620px;width:100%;max-height:82vh;overflow-y:auto;position:relative}.mb h3{color:#8b3a3a;margin-bottom:14px}
-.x{position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#888}.x:hover{color:#8b3a3a}
-.fg{margin-bottom:12px}.fg label{display:block;font-weight:700;font-size:.8rem;margin-bottom:3px}
-.fg input,.fg textarea,.fg select{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:.85rem;font-family:inherit}
-.fg textarea{min-height:100px;resize:vertical}.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.tm{position:fixed;top:16px;right:16px;z-index:999;padding:10px 18px;border-radius:8px;color:#fff;font-weight:700;font-size:.85rem;opacity:0;transition:.35s;pointer-events:none}.tm.show{opacity:1}.ok{background:#5b7a6a}.er{background:#8b3a3a}
-@media(max-width:768px){.sb{width:50px}.sb h2{font-size:0;padding:8px}.sb a span{display:none}.sb a{justify-content:center;padding:10px 0}.mn{margin-left:50px;padding:14px}.st{grid-template-columns:repeat(2,1fr)}.fr{grid-template-columns:1fr}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>管理后台 · 新笔文学社</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #f5f1e8;
+            --card: #fff;
+            --text: #2c2416;
+            --muted: #888;
+            --primary: #8b3a3a;
+            --primary-h: #6b2a2a;
+            --gold: #d4a040;
+            --sidebar-bg: #1a1410;
+            --border: #e5ded4;
+            --shadow: 0 2px 12px rgba(0, 0, 0, .06);
+            --radius: 12px;
+            --radius-sm: 8px
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.5
+        }
+        .lp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f1e8 0%, #e8dfd1 50%, #f0e6d8 100%)
+        }
+        .lc {
+            background: #fff;
+            padding: 44px 32px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid #e5ded4;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, .08)
+        }
+        .lc .logo-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 8px
+        }
+        .lc h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+            letter-spacing: 1px
+        }
+        .lc p.sub {
+            font-size: .85rem;
+            color: var(--muted);
+            margin-bottom: 28px
+        }
+        .lc .fg {
+            text-align: left;
+            margin-bottom: 16px
+        }
+        .lc .fg label {
+            display: block;
+            font-weight: 600;
+            font-size: .78rem;
+            margin-bottom: 5px;
+            color: #555
+        }
+        .lc input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e5ded4;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            background: #fafaf8;
+            font-family: inherit
+        }
+        .lc input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(139, 58, 58, .08);
+            background: #fff
+        }
+        .lc button {
+            width: 100%;
+            padding: 13px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            transition: .2s
+        }
+        .lc button:hover {
+            background: var(--primary-h);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(139, 58, 58, .3)
+        }
+        .lc button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none
+        }
+        .lc .err {
+            color: #c0392b;
+            font-size: .85rem;
+            margin-top: 10px;
+            display: none;
+            background: #fef2f2;
+            padding: 8px 12px;
+            border-radius: 6px
+        }
+        .app {
+            display: none
+        }
+        .app.show {
+            display: flex
+        }
+        .sb {
+            width: 220px;
+            background: var(--sidebar-bg);
+            color: #ccc;
+            min-height: 100vh;
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+            z-index: 10;
+            display: flex;
+            flex-direction: column
+        }
+        .sb .sb-brand {
+            text-align: center;
+            padding: 0 16px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            margin-bottom: 8px
+        }
+        .sb .sb-brand h2 {
+            font-size: .95rem;
+            color: #e8d5b0;
+            letter-spacing: 1px
+        }
+        .sb .sb-nav {
+            flex: 1
+        }
+        .sb a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 18px;
+            color: #888;
+            text-decoration: none;
+            font-size: .85rem;
+            border-left: 3px solid transparent;
+            transition: .2s;
+            margin: 2px 0
+        }
+        .sb a i {
+            width: 18px;
+            text-align: center;
+            font-size: .9rem
+        }
+        .sb a:hover,
+        .sb a.on {
+            color: var(--gold);
+            background: rgba(255, 255, 255, .025);
+            border-left-color: var(--gold)
+        }
+        .sb a.o2 {
+            color: #b55a5a;
+            margin-top: auto
+        }
+        .sb a.o2:hover {
+            color: #e07070;
+            border-left-color: #b55a5a
+        }
+        .sb .sb-badge {
+            display: inline-block;
+            background: #c0392b;
+            color: #fff;
+            font-size: .65rem;
+            padding: 2px 7px;
+            border-radius: 10px;
+            margin-left: auto;
+            font-weight: 700;
+            min-width: 20px;
+            text-align: center
+        }
+        .mn {
+            margin-left: 220px;
+            flex: 1;
+            padding: 28px 32px;
+            min-height: 100vh;
+            max-width: calc(100vw - 220px)
+        }
+        .mn h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+        .mn h2 i {
+            font-size: 1.2rem;
+            opacity: .7
+        }
+        .st {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 14px;
+            margin-bottom: 28px
+        }
+        .st>div {
+            background: var(--card);
+            padding: 18px 16px;
+            border-radius: var(--radius);
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+            border: 1px solid transparent;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden
+        }
+        .st>div:hover {
+            border-color: #d4c8b0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, .1)
+        }
+        .st>div.accent::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary)
+        }
+        .st>div.accent-gold::before {
+            background: var(--gold)
+        }
+        .st .n {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--primary)
+        }
+        .st .l {
+            font-size: .78rem;
+            color: var(--muted);
+            margin-top: 4px
+        }
+        .tr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: var(--card);
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow)
+        }
+        .tr .tr-left {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+        .tr .tr-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+        .tr select,
+        .tr input {
+            padding: 9px 14px;
+            border: 2px solid #e5ded4;
+            border-radius: var(--radius-sm);
+            font-size: .85rem;
+            background: #fff;
+            font-family: inherit
+        }
+        .tr select:focus,
+        .tr input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 58, 58, .06)
+        }
+        .tr input {
+            min-width: 200px
+        }
+        .tb {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow-x: auto;
+            box-shadow: var(--shadow)
+        }
+        .tb table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .82rem
+        }
+        .tb th {
+            background: #faf7f2;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 700;
+            font-size: .75rem;
+            color: #888;
+            border-bottom: 2px solid #e5ded4;
+            white-space: nowrap;
+            letter-spacing: .3px
+        }
+        .tb td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f3efe8;
+            vertical-align: middle
+        }
+        .tb tbody tr:hover {
+            background: #fdfcfa
+        }
+        .bd {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 14px;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .3px
+        }
+        .bd0 {
+            background: #fef3c7;
+            color: #92400e
+        }
+        .bd1 {
+            background: #d1fae5;
+            color: #065f46
+        }
+        .bd2 {
+            background: #fee2e2;
+            color: #991b1b
+        }
+        .bb {
+            padding: 6px 13px;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            font-size: .72rem;
+            font-weight: 700;
+            margin: 2px;
+            transition: .2s;
+            letter-spacing: .3px;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px
+        }
+        .bb:hover {
+            opacity: .75;
+            transform: translateY(-1px)
+        }
+        .b1 {
+            background: #dbeafe;
+            color: #1e40af
+        }
+        .b2 {
+            background: #d1fae5;
+            color: #065f46
+        }
+        .b3 {
+            background: #fee2e2;
+            color: #991b1b
+        }
+        .b4 {
+            background: #f3f4f6;
+            color: #6b7280
+        }
+        .b5 {
+            background: #e0e7ff;
+            color: #3730a3
+        }
+        .b-danger {
+            background: #fee2e2;
+            color: #991b1b
+        }
+        .bt {
+            padding: 10px 22px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: .85rem;
+            margin: 3px;
+            cursor: pointer;
+            transition: .2s;
+            letter-spacing: .5px;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px
+        }
+        .bt:hover {
+            background: var(--primary-h);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(139, 58, 58, .25)
+        }
+        .bg {
+            background: #5b7a6a
+        }
+        .bg:hover {
+            background: #4a6658
+        }
+        .by {
+            background: #b8964a
+        }
+        .by:hover {
+            background: #9a7d3d
+        }
+        .bk {
+            background: #6b5f52
+        }
+        .bk:hover {
+            background: #5a4f44
+        }
+        .bt-sm {
+            padding: 6px 14px;
+            font-size: .75rem
+        }
+        .mo {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, .55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(2px)
+        }
+        .mo.show {
+            display: flex
+        }
+        .mb {
+            background: #fff;
+            padding: 28px 24px;
+            border-radius: 16px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, .2)
+        }
+        .mb h3 {
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-size: 1.15rem
+        }
+        .x {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+            padding: 4px 8px;
+            border-radius: 6px
+        }
+        .x:hover {
+            color: var(--primary);
+            background: #f5f1e8
+        }
+        .fg {
+            margin-bottom: 14px
+        }
+        .fg label {
+            display: block;
+            font-weight: 700;
+            font-size: .78rem;
+            margin-bottom: 4px;
+            color: #555
+        }
+        .fg input,
+        .fg textarea,
+        .fg select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e5ded4;
+            border-radius: var(--radius-sm);
+            font-size: .85rem;
+            font-family: inherit;
+            background: #fafaf8
+        }
+        .fg input:focus,
+        .fg textarea:focus,
+        .fg select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 58, 58, .06);
+            background: #fff
+        }
+        .fg textarea {
+            min-height: 100px;
+            resize: vertical
+        }
+        .fr {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+        .tm {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 12px 22px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 700;
+            font-size: .85rem;
+            opacity: 0;
+            transition: .35s;
+            pointer-events: none;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, .2);
+            letter-spacing: .5px
+        }
+        .tm.show {
+            opacity: 1;
+            pointer-events: auto
+        }
+        .ok {
+            background: #5b7a6a
+        }
+        .er {
+            background: #c0392b
+        }
+        .pg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 18px;
+            flex-wrap: wrap
+        }
+        .pg button {
+            padding: 7px 14px;
+            border: 2px solid #e5ded4;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: .78rem;
+            color: #555
+        }
+        .pg button:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #fdf7f7
+        }
+        .pg button.on {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary)
+        }
+        .pg button:disabled {
+            opacity: .4;
+            cursor: not-allowed
+        }
+        .empty {
+            text-align: center;
+            padding: 40px !important;
+            color: #bbb
+        }
+        .empty i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+            opacity: .5
+        }
+        @media(max-width:768px) {
+            .sb {
+                width: 54px
+            }
+            .sb .sb-brand h2 {
+                font-size: 0;
+                padding: 6px
+            }
+            .sb .sb-brand h2::after {
+                content: '✒';
+                font-size: 1.2rem
+            }
+            .sb a span {
+                display: none
+            }
+            .sb a {
+                justify-content: center;
+                padding: 12px 0
+            }
+            .sb .sb-badge {
+                display: none
+            }
+            .mn {
+                margin-left: 54px;
+                padding: 16px;
+                max-width: calc(100vw - 54px)
+            }
+            .st {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px
+            }
+            .st .n {
+                font-size: 1.6rem
+            }
+            .fr {
+                grid-template-columns: 1fr
+            }
+            .tr {
+                flex-direction: column;
+                align-items: stretch
+            }
+            .tr .tr-left,
+            .tr .tr-right {
+                justify-content: center
+            }
+            .tr input {
+                min-width: auto;
+                width: 100%
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="tm" id="toast"></div>
-<div class="lp" id="lp"><div class="lc">
-<h1>新笔文学社</h1><p>管理后台</p>
-<input type="email" id="le" placeholder="管理员邮箱">
-<input type="password" id="lpw" placeholder="密码">
-<button id="lbtn" onclick="dl()">登 录</button>
-<p class="err" id="lerr">邮箱或密码错误</p>
-</div></div>
+    <div class="tm" id="toast"></div>
 
-<div class="app" id="app">
-<div class="sb">
-<h2>新笔文学社</h2>
-<a href="#" class="on" data-p="d"><i class="fas fa-home"></i><span>仪表盘</span></a>
-<a href="#" data-p="s"><i class="fas fa-file-alt"></i><span>投稿管理</span></a>
-<a href="#" data-p="a"><i class="fas fa-user-plus"></i><span>社员申请</span></a>
-<a href="#" data-p="w"><i class="fas fa-book-open"></i><span>作品管理</span></a>
-<a href="#" data-p="c"><i class="fas fa-comments"></i><span>评论管理</span></a>
-<a href="#" onclick="lo()" class="o2"><i class="fas fa-sign-out-alt"></i><span>退出</span></a>
-</div>
-<div class="mn" id="mc"></div>
-</div>
-<div class="mo" id="mo"><div class="mb" id="mob"></div></div>
+    <!-- 登录 -->
+    <div class="lp" id="lp">
+        <div class="lc">
+            <div class="logo-icon"><i class="fas fa-feather-alt"></i></div>
+            <h1>新笔文学社</h1>
+            <p class="sub">管理后台 · 内容与社员管理中心</p>
+            <div class="fg"><label>管理员邮箱</label><input type="email" id="le" placeholder="admin@xinbi.com"></div>
+            <div class="fg"><label>密码</label><input type="password" id="lpw" placeholder="••••••••"></div>
+            <button id="lbtn" onclick="doLogin()">登 录</button>
+            <p class="err" id="lerr"></p>
+        </div>
+    </div>
 
-<script>
-var U='https://aybnmewinjckmftvctvx.supabase.co';
-var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE';
-var cp='d';
-function $(s){return document.querySelector(s)}
-function $$(s){return document.querySelectorAll(s)}
-function tm(m,t){var e=$('#toast');e.textContent=m;e.className='tm '+(t||'ok')+' show';setTimeout(function(){e.classList.remove('show')},2000)}
-function es(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
-function ft(d){return d?new Date(d).toLocaleDateString('zh-CN'):'-'}
-function ss(s){var m={pending:'待审核',approved:'已通过',rejected:'已拒绝'};return m[s]||'待审核'}
-function tk(){return sessionStorage.getItem('tk')}
-function ap(p,o){o=o||{};var h={'apikey':K,'Content-Type':'application/json'};var t=tk();if(t)h.Authorization='Bearer '+t;return fetch(U+'/rest/v1/'+p,{method:o.method||'GET',headers:h,body:o.body?JSON.stringify(o.body):undefined}).then(function(r){if(o.method==='DELETE')return r.ok;return r.json()})}
+    <!-- 主界面 -->
+    <div class="app" id="app">
+        <div class="sb">
+            <div class="sb-brand">
+                <h2>新笔文学社</h2>
+            </div>
+            <div class="sb-nav">
+                <a href="#" class="on" data-p="d"><i class="fas fa-tachometer-alt"></i><span>仪表盘</span></a>
+                <a href="#" data-p="s"><i class="fas fa-file-alt"></i><span>投稿管理</span><span class="sb-badge" id="badge-s" style="display:none">0</span></a>
+                <a href="#" data-p="a"><i class="fas fa-user-plus"></i><span>社员申请</span><span class="sb-badge" id="badge-a" style="display:none">0</span></a>
+                <a href="#" data-p="w"><i class="fas fa-book-open"></i><span>作品管理</span></a>
+                <a href="#" data-p="c"><i class="fas fa-comments"></i><span>评论管理</span></a>
+                <a href="#" data-p="u"><i class="fas fa-users"></i><span>用户管理</span></a>
+            </div>
+            <a href="#" onclick="doLogout()" class="o2"><i class="fas fa-sign-out-alt"></i><span>退出登录</span></a>
+        </div>
+        <div class="mn" id="mc"></div>
+    </div>
 
-function dl(){
-var em=$('#le').value.trim(),pw=$('#lpw').value,btn=$('#lbtn'),err=$('#lerr');
-err.style.display='none';
-if(!em||!pw){err.textContent='请填写邮箱和密码';err.style.display='block';return}
-btn.disabled=true;btn.textContent='验证中...';
-fetch(U+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'apikey':K,'Content-Type':'application/json'},body:JSON.stringify({email:em,password:pw})}).then(function(r){
-return r.json().then(function(d){if(!r.ok)throw new Error(d.error_description||'邮箱或密码错误');return d});
-}).then(function(d){
-return ap('profiles?id=eq.'+d.user.id+'&select=role').then(function(pr){
-if(!pr||!pr.length||pr[0].role!=='admin')throw new Error('无管理权限');
-sessionStorage.setItem('tk',d.access_token);sessionStorage.setItem('ok','1');
-$('#lp').style.display='none';$('#app').classList.add('show');nav('d');
-});
-}).catch(function(e){err.textContent=e.message;err.style.display='block'}).finally(function(){btn.disabled=false;btn.textContent='登 录'});
-}
-function lo(){sessionStorage.clear();location.reload()}
+    <!-- 弹窗 -->
+    <div class="mo" id="mo"><div class="mb" id="mob"></div></div>
 
-$$('.sb a[data-p]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();$$('.sb a[data-p]').forEach(function(x){x.classList.remove('on')});this.classList.add('on');nav(this.dataset.p)})});
+    <script>
+        // ==================== 全局变量 ====================
+        var SUPABASE_URL = 'https://aybnmewinjckmftvctvx.supabase.co';
+        var SUPABASE_KEY =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE';
+        var currentPanel = 'd';
+        var PER_PAGE = 20;
+        var pageState = {};
+        var filterState = {};
+        var searchState = {};
 
-function nav(p){cp=p;var m=$('#mc');m.innerHTML='<p style="text-align:center;padding:40px;color:#bbb;">加载中...</p>';
-if(p==='d'){dp(m)}
-else if(p==='s'){la(m,'submissions',ls)}
-else if(p==='a'){la(m,'member_applications',la2)}
-else if(p==='w'){lw(m)}
-else if(p==='c'){lc(m)}}
+        // ==================== 快捷选择器 ====================
+        function qs(s) { return document.querySelector(s); }
 
-function dp(m){Promise.all([ap('submissions?select=id,status'),ap('member_applications?select=id,status'),ap('works?select=id'),ap('comments?select=id'),ap('visits?select=id')]).then(function(r){var s=r[0],a=r[1],w=r[2],c=r[3],v=r[4];var ps=s.filter(function(x){return x.status==='pending'}).length,pa=a.filter(function(x){return x.status==='pending'}).length;m.innerHTML='<h2>仪表盘</h2><div class="st"><div><div class="n">'+s.length+'</div><div class="l">总投稿</div></div><div><div class="n">'+ps+'</div><div class="l">待审核</div></div><div><div class="n">'+a.length+'</div><div class="l">社员申请</div></div><div><div class="n">'+pa+'</div><div class="l">待处理</div></div><div><div class="n">'+w.length+'</div><div class="l">作品</div></div><div><div class="n">'+c.length+'</div><div class="l">评论</div></div><div><div class="n">'+v.length+'</div><div class="l">访问</div></div></div><div style="background:#fff;padding:16px;border-radius:12px"><button class="bt" onclick="nav(\'s\')">查看投稿</button> <button class="bt bg" onclick="nav(\'a\')">查看申请</button> <button class="bt by" onclick="nav(\'w\')">管理作品</button> <button class="bt bk" onclick="nav(\'c\')">管理评论</button></div>'})}
+        function qsa(s) { return document.querySelectorAll(s); }
 
-function la(m,table,fn){fn(m,table)}
+        // ==================== Toast ====================
+        function showToast(msg, type) {
+            var e = qs('#toast');
+            e.textContent = msg;
+            e.className = 'tm ' + (type || 'ok') + ' show';
+            clearTimeout(e._tid);
+            e._tid = setTimeout(function() { e.classList.remove('show'); }, 2200);
+        }
 
-function ls(m,table,f){var q='select=*&order=created_at.desc&limit=200';if(f)q+='&status=eq.'+f;ap(q).then(function(d){var r='';if(d&&d.length){for(var i=0;i<d.length;i++){var x=d[i],st=x.status||'pending';r+='<tr><td>'+(i+1)+'</td><td><strong>'+es(x.title)+'</strong></td><td>'+es(x.name)+' '+es(x.grade)+'</td><td>'+es(x.type)+'</td><td><span class="bd bd'+(st==='approved'?1:st==='rejected'?2:0)+'">'+ss(st)+'</span></td><td>'+ft(x.created_at)+'</td><td><button class="bb b1" onclick="vi(\'submissions\','+x.id+')">查看</button> '+(st!=='approved'?'<button class="bb b2" onclick="su(\'submissions\','+x.id+',\'approved\')">通过</button> ':'')+(st!=='rejected'?'<button class="bb b3" onclick="su(\'submissions\','+x.id+',\'rejected\')">拒绝</button> ':'')+'<button class="bb b4" onclick="di(\'submissions\','+x.id+')">删除</button></td></tr>'}}else{r='<tr><td colspan="7" style="text-align:center;padding:24px;color:#bbb;">暂无数据</td></tr>'}m.innerHTML='<h2>投稿管理</h2><div class="tr"><select onchange="fs(this.value)"><option value="">全部状态</option><option value="pending"'+(f==='pending'?' selected':'')+'>待审核</option><option value="approved"'+(f==='approved'?' selected':'')+'>已通过</option><option value="rejected"'+(f==='rejected'?' selected':'')+'>已拒绝</option></select><button class="bt bg" onclick="ex(\'submissions\')">导出CSV</button></div><div class="tb"><table><tr><th>#</th><th>标题</th><th>作者</th><th>类型</th><th>状态</th><th>时间</th><th>操作</th></tr>'+r+'</table></div>'})}
+        // ==================== 工具 ====================
+        function escHtml(s) { var d = document.createElement('div');
+            d.textContent = s || ''; return d.innerHTML; }
 
-function la2(m,table,f){var q='select=*&order=created_at.desc&limit=200';if(f)q+='&status=eq.'+f;ap(q).then(function(d){var r='';if(d&&d.length){for(var i=0;i<d.length;i++){var x=d[i],st=x.status||'pending';r+='<tr><td>'+(i+1)+'</td><td><strong>'+es(x.name)+'</strong></td><td>'+es(x.email)+'</td><td>'+es(x.grade)+'</td><td>'+(x.interest||'-')+'</td><td><span class="bd bd'+(st==='approved'?1:st==='rejected'?2:0)+'">'+ss(st)+'</span></td><td>'+ft(x.created_at)+'</td><td><button class="bb b1" onclick="vi(\'member_applications\','+x.id+')">查看</button> '+(st!=='approved'?'<button class="bb b2" onclick="su(\'member_applications\','+x.id+',\'approved\')">通过</button> ':'')+(st!=='rejected'?'<button class="bb b3" onclick="su(\'member_applications\','+x.id+',\'rejected\')">拒绝</button> ':'')+'<button class="bb b4" onclick="di(\'member_applications\','+x.id+')">删除</button></td></tr>'}}else{r='<tr><td colspan="8" style="text-align:center;padding:24px;color:#bbb;">暂无数据</td></tr>'}m.innerHTML='<h2>社员申请</h2><div class="tr"><select onchange="fa(this.value)"><option value="">全部状态</option><option value="pending"'+(f==='pending'?' selected':'')+'>待处理</option><option value="approved"'+(f==='approved'?' selected':'')+'>已通过</option><option value="rejected"'+(f==='rejected'?' selected':'')+'>已拒绝</option></select><button class="bt bg" onclick="ex(\'member_applications\')">导出CSV</button></div><div class="tb"><table><tr><th>#</th><th>姓名</th><th>邮箱</th><th>年级</th><th>兴趣</th><th>状态</th><th>时间</th><th>操作</th></tr>'+r+'</table></div>'})}
+        function fmtDate(d) { return d ? new Date(d).toLocaleDateString('zh-CN') : '-'; }
 
-function lw(m){ap('works?select=*&order=created_at.desc&limit=200').then(function(d){var r='';if(d&&d.length){for(var i=0;i<d.length;i++){var x=d[i];r+='<tr><td>'+(i+1)+'</td><td><strong>'+es(x.title)+'</strong></td><td>'+es(x.author)+' '+(x.grade||'')+'</td><td>'+es(x.category)+'</td><td>'+(x.likes||0)+'</td><td>'+ft(x.created_at)+'</td><td><button class="bb b5" onclick="ew('+x.id+')">编辑</button> <button class="bb b1" onclick="vi(\'works\','+x.id+')">查看</button> <button class="bb b4" onclick="di(\'works\','+x.id+')">删除</button></td></tr>'}}else{r='<tr><td colspan="7" style="text-align:center;padding:24px;color:#bbb;">暂无作品</td></tr>'}m.innerHTML='<h2>作品管理</h2><div class="tr"><button class="bt" onclick="aw()">＋ 添加作品</button></div><div class="tb"><table><tr><th>#</th><th>标题</th><th>作者</th><th>类型</th><th>点赞</th><th>时间</th><th>操作</th></tr>'+r+'</table></div>'})}
+        function fmtDateTime(d) { return d ? new Date(d).toLocaleString('zh-CN') : '-'; }
 
-function lc(m){ap('comments?select=*,works(title),profiles(display_name)&order=created_at.desc&limit=200').then(function(d){var r='';if(d&&d.length){for(var i=0;i<d.length;i++){var x=d[i],pn=(x.profiles&&x.profiles.display_name)?x.profiles.display_name:'匿名',wn=(x.works&&x.works.title)?x.works.title:'已删除';r+='<tr><td>'+(i+1)+'</td><td>'+es(pn)+'</td><td>'+es(wn)+'</td><td>'+es((x.content||'').substring(0,80))+'</td><td>'+ft(x.created_at)+'</td><td><button class="bb b4" onclick="di(\'comments\','+x.id+')">删除</button></td></tr>'}}else{r='<tr><td colspan="6" style="text-align:center;padding:24px;color:#bbb;">暂无评论</td></tr>'}m.innerHTML='<h2>评论管理</h2><div class="tb"><table><tr><th>#</th><th>用户</th><th>作品</th><th>内容</th><th>时间</th><th>操作</th></tr>'+r+'</table></div>'})}
+        function statusLabel(s) { var m = { pending: '待审核', approved: '已通过', rejected: '已拒绝' }; return m[s] ||
+                '待审核'; }
 
-function fs(v){ls($('#mc'),'submissions',v||null)}
-function fa(v){la2($('#mc'),'member_applications',v||null)}
+        function getToken() { return sessionStorage.getItem('tk'); }
 
-function vi(t,id){ap(t+'?id=eq.'+id+'&select=*').then(function(d){if(!d||!d.length)return;var x=d[0],h='<button class="x" onclick="cm()">&times;</button><h3>详情</h3>';Object.keys(x).forEach(function(k){if(k==='id'||k==='created_at'||k==='updated_at')return;var v=x[k];if(v===null)v='';else v=String(v);if(k==='content'||v.length>200)h+='<p><strong>'+es(k)+'：</strong></p><div style="background:#f9f6f0;padding:12px;border-radius:8px;white-space:pre-wrap;font-size:.85rem;margin:4px 0">'+es(v)+'</div>';else h+='<p><strong>'+es(k)+'：</strong> '+es(v)+'</p>'});$('#mob').innerHTML=h;$('#mo').classList.add('show')})}
-function su(t,id,st){fetch(U+'/rest/v1/'+t+'?id=eq.'+id,{method:'PATCH',headers:{'apikey':K,'Content-Type':'application/json','Authorization':'Bearer '+tk()},body:JSON.stringify({status:st})}).then(function(){tm('已更新');nav(cp)})}
-function di(t,id){if(!confirm('确定删除？'))return;fetch(U+'/rest/v1/'+t+'?id=eq.'+id,{method:'DELETE',headers:{'apikey':K,'Authorization':'Bearer '+tk()}}).then(function(){tm('已删除');nav(cp)})}
-function cm(){$('#mo').classList.remove('show')}
-$('#mo').addEventListener('click',function(e){if(e.target===this)cm()});
+        // ==================== API 请求（带超时） ====================
+        function api(path, opts) {
+            opts = opts || {};
+            var headers = { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' };
+            var token = getToken();
+            if (token) headers['Authorization'] = 'Bearer ' + token;
+            var url = SUPABASE_URL + '/rest/v1/' + path;
+            var fetchOpts = { method: opts.method || 'GET', headers: headers };
+            if (opts.body && fetchOpts.method !== 'GET' && fetchOpts.method !== 'HEAD') {
+                fetchOpts.body = JSON.stringify(opts.body);
+            }
+            // 15 秒超时
+            var controller = new AbortController();
+            fetchOpts.signal = controller.signal;
+            var timer = setTimeout(function() { controller.abort(); }, 15000);
 
-function ew(id){ap('works?id=eq.'+id+'&select=*').then(function(d){if(!d||!d.length)return;var w=d[0],h='<button class="x" onclick="cm()">&times;</button><h3>编辑作品</h3>';h+='<form onsubmit="return sw(event,'+id+')"><div class="fg"><label>标题</label><input id="ew_t" value="'+es(w.title)+'" required></div><div class="fr"><div class="fg"><label>作者</label><input id="ew_a" value="'+es(w.author)+'" required></div><div class="fg"><label>年级</label><input id="ew_g" value="'+es(w.grade||'')+'"></div></div><div class="fr"><div class="fg"><label>班级</label><input id="ew_c" value="'+es(w.class_name||'')+'"></div><div class="fg"><label>类型</label><select id="ew_ct"><option value="prose"'+(w.category==='prose'?' selected':'')+'>散文</option><option value="poetry"'+(w.category==='poetry'?' selected':'')+'>诗歌</option><option value="fiction"'+(w.category==='fiction'?' selected':'')+'>小说</option><option value="essay"'+(w.category==='essay'?' selected':'')+'>随笔</option></select></div></div><div class="fg"><label>封面URL</label><input id="ew_i" value="'+es(w.image_url||'')+'"></div><div class="fg"><label>摘要</label><textarea id="ew_e" rows="2">'+es(w.excerpt||'')+'</textarea></div><div class="fg"><label>内容</label><textarea id="ew_co" rows="6" required>'+es(w.content||'')+'</textarea></div><button type="submit" class="bt" style="width:100%">保存</button></form>';$('#mob').innerHTML=h;$('#mo').classList.add('show')})}
-function aw(){var h='<button class="x" onclick="cm()">&times;</button><h3>添加作品</h3>';h+='<form onsubmit="return asa(event)"><div class="fg"><label>标题</label><input id="aw_t" required></div><div class="fr"><div class="fg"><label>作者</label><input id="aw_a" required></div><div class="fg"><label>年级</label><input id="aw_g"></div></div><div class="fr"><div class="fg"><label>班级</label><input id="aw_c"></div><div class="fg"><label>类型</label><select id="aw_ct"><option value="prose">散文</option><option value="poetry">诗歌</option><option value="fiction">小说</option><option value="essay">随笔</option></select></div></div><div class="fg"><label>封面URL</label><input id="aw_i"></div><div class="fg"><label>摘要</label><textarea id="aw_e" rows="2"></textarea></div><div class="fg"><label>内容</label><textarea id="aw_co" rows="6" required></textarea></div><button type="submit" class="bt" style="width:100%">添加</button></form>';$('#mob').innerHTML=h;$('#mo').classList.add('show')}
-function sw(e,id){e.preventDefault();var b={title:$('#ew_t').value,author:$('#ew_a').value,grade:$('#ew_g').value,class_name:$('#ew_c').value,category:$('#ew_ct').value,image_url:$('#ew_i').value,excerpt:$('#ew_e').value,content:$('#ew_co').value};fetch(U+'/rest/v1/works?id=eq.'+id,{method:'PATCH',headers:{'apikey':K,'Content-Type':'application/json','Authorization':'Bearer '+tk()},body:JSON.stringify(b)}).then(function(){cm();tm('已更新');nav('w')});return false}
-function asa(e){e.preventDefault();var b={title:$('#aw_t').value,author:$('#aw_a').value,grade:$('#aw_g').value,class_name:$('#aw_c').value,category:$('#aw_ct').value,image_url:$('#aw_i').value,excerpt:$('#aw_e').value,content:$('#aw_co').value,likes:0,published:true};fetch(U+'/rest/v1/works',{method:'POST',headers:{'apikey':K,'Content-Type':'application/json','Authorization':'Bearer '+tk()},body:JSON.stringify(b)}).then(function(){cm();tm('已添加');nav('w')});return false}
-function ex(t){ap(t+'?select=*&limit=1000').then(function(d){if(!d||!d.length){tm('无数据','er');return}var hd=Object.keys(d[0]).filter(function(k){return k!=='id'&&k!=='updated_at'});var v=hd.join(',')+'\n';d.forEach(function(r){v+=hd.map(function(k){return '"'+String(r[k]||'').replace(/"/g,'""')+'"'}).join(',')+'\n'});var b=new Blob(['\uFEFF'+v],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=t+'.csv';a.click();tm('导出成功')})}
-if(sessionStorage.getItem('ok')==='1'){$('#lp').style.display='none';$('#app').classList.add('show');nav('d')}
-</script>
+            return fetch(url, fetchOpts).then(function(r) {
+                clearTimeout(timer);
+                if (r.status === 204) return { ok: true };
+                return r.json().then(function(d) {
+                    if (!r.ok) throw new Error(d.message || d.error_description || '请求失败(' + r.status +
+                        ')');
+                    return d;
+                });
+            }).catch(function(e) {
+                clearTimeout(timer);
+                if (e.name === 'AbortError') throw new Error('请求超时，请检查网络连接');
+                throw e;
+            });
+        }
+
+        // ==================== 计数（修复版） ====================
+        function apiCount(path) {
+            var headers = {
+                'apikey': SUPABASE_KEY,
+                'Prefer': 'count=exact'
+            };
+            var token = getToken();
+            if (token) headers['Authorization'] = 'Bearer ' + token;
+
+            // 追加 limit=0 只取计数不取数据
+            var sep = path.indexOf('?') === -1 ? '?' : '&';
+            var fullPath = path + sep + 'limit=0';
+
+            return fetch(SUPABASE_URL + '/rest/v1/' + fullPath, {
+                method: 'GET',
+                headers: headers
+            }).then(function(r) {
+                var cr = r.headers.get('content-range');
+                if (cr) {
+                    // content-range 格式: "0-0/123"
+                    var parts = cr.split('/');
+                    if (parts.length === 2) return parseInt(parts[1]) || 0;
+                }
+                return 0;
+            }).catch(function() {
+                return 0;
+            });
+        }
+
+        // ==================== 登录（带超时保护） ====================
+        function doLogin() {
+            var email = qs('#le').value.trim();
+            var password = qs('#lpw').value;
+            var btn = qs('#lbtn');
+            var err = qs('#lerr');
+            err.style.display = 'none';
+
+            if (!email || !password) {
+                err.textContent = '请填写邮箱和密码';
+                err.style.display = 'block';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '验证中...';
+            console.log('🔐 开始登录:', email);
+
+            // 创建超时控制器
+            var controller = new AbortController();
+            var timer = setTimeout(function() {
+                controller.abort();
+                console.log('⏰ 登录请求超时');
+            }, 15000);
+
+            fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+                    method: 'POST',
+                    headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: password }),
+                    signal: controller.signal
+                }).then(function(r) {
+                    clearTimeout(timer);
+                    console.log('📡 认证响应状态:', r.status);
+                    // 先检查 HTTP 状态，再尝试解析 JSON
+                    return r.json().then(function(d) {
+                        if (!r.ok) {
+                            var msg = d.error_description || d.message || d.msg || '邮箱或密码错误（状态码:' + r
+                                .status + '）';
+                            throw new Error(msg);
+                        }
+                        return d;
+                    }).catch(function(jsonErr) {
+                        // JSON 解析失败（可能返回了 HTML）
+                        if (jsonErr.message && jsonErr.message.indexOf('邮箱或密码错误') === -1 &&
+                            jsonErr.message.indexOf('状态码') === -1) {
+                            throw new Error('服务器返回异常（状态码:' + r.status + '），请确认 Supabase 项目是否正常运行');
+                        }
+                        throw jsonErr;
+                    });
+                }).then(function(data) {
+                    console.log('✅ 认证成功，检查管理员权限...');
+                    return api('profiles?id=eq.' + data.user.id + '&select=role').then(function(profiles) {
+                        if (!profiles || !profiles.length || profiles[0].role !== 'admin') {
+                            throw new Error('无管理权限，请联系超级管理员将您的角色设为 admin');
+                        }
+                        sessionStorage.setItem('tk', data.access_token);
+                        sessionStorage.setItem('ok', '1');
+                        sessionStorage.setItem('admin_email', email);
+                        console.log('🎉 登录成功，进入管理后台');
+                        qs('#lp').style.display = 'none';
+                        qs('#app').classList.add('show');
+                        switchPanel('d');
+                        refreshBadges();
+                    });
+                }).catch(function(e) {
+                    clearTimeout(timer);
+                    console.error('❌ 登录失败:', e.message);
+                    err.textContent = e.message;
+                    err.style.display = 'block';
+                    // 如果是超时或网络错误，给出额外提示
+                    if (e.name === 'AbortError' || e.message.indexOf('超时') !== -1) {
+                        err.textContent = '请求超时，请检查网络连接或 Supabase 服务状态';
+                    }
+                    if (e.message.indexOf('Failed to fetch') !== -1 || e.message.indexOf('NetworkError') !== -1) {
+                        err.textContent = '网络连接失败，请检查网络或 Supabase 地址是否正确';
+                    }
+                }).finally(function() {
+                    clearTimeout(timer);
+                    btn.disabled = false;
+                    btn.textContent = '登 录';
+                    console.log('🔓 登录按钮已恢复');
+                });
+        }
+
+        function doLogout() {
+            sessionStorage.clear();
+            location.reload();
+        }
+
+        // ==================== 导航 ====================
+        function switchPanel(p) {
+            currentPanel = p;
+            var mc = qs('#mc');
+            mc.innerHTML =
+                '<p style="text-align:center;padding:60px;color:#bbb;"><i class="fas fa-spinner fa-spin" style="display:block;font-size:2rem;margin-bottom:12px;"></i>加载中...</p>';
+
+            if (!pageState[p]) pageState[p] = 1;
+            if (!filterState[p]) filterState[p] = '';
+            if (!searchState[p]) searchState[p] = '';
+
+            if (p === 'd') renderDashboard(mc);
+            else if (p === 's') renderSubmissions(mc, null, 1);
+            else if (p === 'a') renderApplications(mc, null, 1);
+            else if (p === 'w') renderWorks(mc, 1);
+            else if (p === 'c') renderComments(mc, 1);
+            else if (p === 'u') renderUsers(mc, 1);
+        }
+
+        qsa('.sb a[data-p]').forEach(function(a) {
+            a.addEventListener('click', function(e) {
+                e.preventDefault();
+                qsa('.sb a[data-p]').forEach(function(x) { x.classList.remove('on'); });
+                a.classList.add('on');
+                switchPanel(a.dataset.p);
+            });
+        });
+
+        function refreshBadges() {
+            console.log('🔄 刷新徽章...');
+            Promise.all([
+                apiCount('submissions?select=id&status=eq.pending'),
+                apiCount('member_applications?select=id&status=eq.pending')
+            ]).then(function(r) {
+                var bs = qs('#badge-s'),
+                    ba = qs('#badge-a');
+                if (r[0] > 0) { bs.textContent = r[0];
+                    bs.style.display = 'inline-block'; } else { bs.style.display = 'none'; }
+                if (r[1] > 0) { ba.textContent = r[1];
+                    ba.style.display = 'inline-block'; } else { ba.style.display = 'none'; }
+                console.log('📊 待审核投稿:', r[0], '| 待处理申请:', r[1]);
+            }).catch(function(e) {
+                console.warn('⚠️ 刷新徽章失败:', e.message);
+            });
+        }
+
+        // ==================== 仪表盘 ====================
+        function renderDashboard(mc) {
+            Promise.all([
+                api('submissions?select=id,status'),
+                api('member_applications?select=id,status'),
+                api('works?select=id'),
+                api('comments?select=id'),
+                api('profiles?select=id')
+            ]).then(function(r) {
+                var s = r[0],
+                    a = r[1],
+                    w = r[2],
+                    c = r[3],
+                    u = r[4];
+                var pendingSub = s.filter(function(x) { return x.status === 'pending'; }).length;
+                var pendingApp = a.filter(function(x) { return x.status === 'pending'; }).length;
+                var approvedSub = s.filter(function(x) { return x.status === 'approved'; }).length;
+                var rejectedSub = s.filter(function(x) { return x.status === 'rejected'; }).length;
+
+                mc.innerHTML =
+                    '<h2><i class="fas fa-tachometer-alt"></i> 仪表盘</h2>' +
+                    '<div class="st">' +
+                    '<div class="accent" onclick="switchPanel(\'s\')"><div class="n">' + s.length +
+                    '</div><div class="l">📝 总投稿</div></div>' +
+                    '<div class="accent-gold" onclick="filterState[\'s\']=\'pending\';pageState[\'s\']=1;switchPanel(\'s\')"><div class="n">' +
+                    pendingSub + '</div><div class="l">⏳ 待审核投稿</div></div>' +
+                    '<div onclick="filterState[\'s\']=\'approved\';pageState[\'s\']=1;switchPanel(\'s\')"><div class="n">' +
+                    approvedSub + '</div><div class="l">✅ 已通过</div></div>' +
+                    '<div onclick="filterState[\'s\']=\'rejected\';pageState[\'s\']=1;switchPanel(\'s\')"><div class="n">' +
+                    rejectedSub + '</div><div class="l">❌ 已拒绝</div></div>' +
+                    '<div class="accent" onclick="switchPanel(\'a\')"><div class="n">' + a.length +
+                    '</div><div class="l">👥 社员申请</div></div>' +
+                    '<div class="accent-gold" onclick="filterState[\'a\']=\'pending\';pageState[\'a\']=1;switchPanel(\'a\')"><div class="n">' +
+                    pendingApp + '</div><div class="l">🔔 待处理申请</div></div>' +
+                    '<div onclick="switchPanel(\'w\')"><div class="n">' + w.length +
+                    '</div><div class="l">📚 作品总数</div></div>' +
+                    '<div onclick="switchPanel(\'c\')"><div class="n">' + c.length +
+                    '</div><div class="l">💬 评论总数</div></div>' +
+                    '<div onclick="switchPanel(\'u\')"><div class="n">' + u.length +
+                    '</div><div class="l">👤 注册用户</div></div>' +
+                    '</div>' +
+                    '<div style="background:#fff;padding:18px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);display:flex;flex-wrap:wrap;gap:8px;">' +
+                    '<button class="bt" onclick="switchPanel(\'s\')">📝 查看投稿</button>' +
+                    '<button class="bt bg" onclick="switchPanel(\'a\')">👥 查看申请</button>' +
+                    '<button class="bt by" onclick="switchPanel(\'w\')">📚 管理作品</button>' +
+                    '<button class="bt bk" onclick="switchPanel(\'c\')">💬 管理评论</button>' +
+                    '<button class="bt" style="background:#3b6b8b" onclick="switchPanel(\'u\')">👤 用户管理</button>' +
+                    '</div>';
+            }).catch(function(e) {
+                mc.innerHTML = '<h2>仪表盘</h2><p style="color:#c0392b;">加载失败: ' + escHtml(e.message) + '</p>';
+            });
+        }
+
+        // ==================== 分页组件 ====================
+        function renderPagination(totalPages, pgPage, key, table, filter) {
+            if (totalPages <= 1) return '';
+            var h = '<div class="pg">';
+            h += '<button ' + (pgPage <= 1 ? 'disabled' : '') + ' onclick="goPage(\'' + key + '\',' + (pgPage - 1) + ',\'' +
+                table + '\',\'' + (filter || '') + '\')">‹ 上一页</button>';
+            var start = Math.max(1, pgPage - 2);
+            var end = Math.min(totalPages, pgPage + 2);
+            if (start > 1) h += '<button onclick="goPage(\'' + key + '\',1,\'' + table + '\',\'' + (filter || '') +
+                '\')">1</button>';
+            if (start > 2) h += '<button disabled>…</button>';
+            for (var i = start; i <= end; i++) {
+                h += '<button class="' + (i === pgPage ? 'on' : '') + '" onclick="goPage(\'' + key + '\',' + i + ',\'' +
+                    table + '\',\'' + (filter || '') + '\')">' + i + '</button>';
+            }
+            if (end < totalPages - 1) h += '<button disabled>…</button>';
+            if (end < totalPages) h += '<button onclick="goPage(\'' + key + '\',' + totalPages + ',\'' + table + '\',\'' + (
+                filter || '') + '\')">' + totalPages + '</button>';
+            h += '<button ' + (pgPage >= totalPages ? 'disabled' : '') + ' onclick="goPage(\'' + key + '\',' + (pgPage + 1) +
+                ',\'' + table + '\',\'' + (filter || '') + '\')">下一页 ›</button>';
+            h += '</div>';
+            return h;
+        }
+
+        function goPage(key, page, table, filter) {
+            pageState[key] = page;
+            filterState[key] = filter || '';
+            if (key === 's') renderSubmissions(qs('#mc'), filter || null, page);
+            else if (key === 'a') renderApplications(qs('#mc'), filter || null, page);
+            else if (key === 'w') renderWorks(qs('#mc'), page);
+            else if (key === 'c') renderComments(qs('#mc'), page);
+            else if (key === 'u') renderUsers(qs('#mc'), page);
+        }
+
+        // ==================== 投稿管理 ====================
+        function renderSubmissions(mc, f, page) {
+            page = page || 1;
+            pageState['s'] = page;
+            if (f !== undefined && f !== null) filterState['s'] = f;
+            else f = filterState['s'] || '';
+            var search = searchState['s'] || '';
+            var offset = (page - 1) * PER_PAGE;
+            var q = 'submissions?select=*&order=created_at.desc&limit=' + PER_PAGE + '&offset=' + offset;
+            if (f) q += '&status=eq.' + f;
+            if (search) q += '&or=(title.ilike.%25' + encodeURIComponent(search) + '%25,name.ilike.%25' + encodeURIComponent(
+                search) + '%25)';
+            var cq = 'submissions?select=id';
+            if (f) cq += '&status=eq.' + f;
+            if (search) cq += '&or=(title.ilike.%25' + encodeURIComponent(search) + '%25,name.ilike.%25' +
+                encodeURIComponent(search) + '%25)';
+
+            Promise.all([api(q), apiCount(cq)]).then(function(r) {
+                var data = r[0],
+                    total = r[1];
+                var rows = '';
+                var totalPages = Math.ceil(total / PER_PAGE) || 1;
+                if (data && data.length) {
+                    for (var i = 0; i < data.length; i++) {
+                        var x = data[i],
+                            st = x.status || 'pending';
+                        var bc = st === 'approved' ? 'bd1' : st === 'rejected' ? 'bd2' : 'bd0';
+                        rows += '<tr><td>' + ((page - 1) * PER_PAGE + i + 1) + '</td>' +
+                            '<td><strong>' + escHtml(x.title) + '</strong></td>' +
+                            '<td>' + escHtml(x.name) + ' <small>' + escHtml(x.grade || '') + '</small></td>' +
+                            '<td>' + escHtml(x.type || '-') + '</td>' +
+                            '<td><span class="bd ' + bc + '">' + statusLabel(st) + '</span></td>' +
+                            '<td>' + fmtDate(x.created_at) + '</td>' +
+                            '<td style="white-space:nowrap">' +
+                            '<button class="bb b1" onclick="viewDetail(\'submissions\',' + x.id +
+                            ')">👁</button> ' +
+                            (st !== 'approved' ? '<button class="bb b2" onclick="updateStatus(\'submissions\',' + x
+                                .id + ',\'approved\')">✓</button> ' : '') +
+                            (st !== 'rejected' ? '<button class="bb b3" onclick="updateStatus(\'submissions\',' + x
+                                .id + ',\'rejected\')">✗</button> ' : '') +
+                            '<button class="bb b4" onclick="deleteRecord(\'submissions\',' + x.id +
+                            ')">🗑</button>' +
+                            '</td></tr>';
+                    }
+                } else {
+                    rows =
+                        '<tr><td colspan="7" class="empty"><i class="fas fa-inbox"></i><p>暂无投稿数据</p></td></tr>';
+                }
+                mc.innerHTML =
+                    '<h2><i class="fas fa-file-alt"></i> 投稿管理</h2>' +
+                    '<div class="tr"><div class="tr-left">' +
+                    '<select onchange="filterState[\'s\']=this.value;pageState[\'s\']=1;renderSubmissions(qs(\'#mc\'),this.value||null,1)">' +
+                    '<option value="">全部状态</option>' +
+                    '<option value="pending"' + (f === 'pending' ? ' selected' : '') + '>⏳ 待审核</option>' +
+                    '<option value="approved"' + (f === 'approved' ? ' selected' : '') + '>✅ 已通过</option>' +
+                    '<option value="rejected"' + (f === 'rejected' ? ' selected' : '') + '>❌ 已拒绝</option>' +
+                    '</select>' +
+                    '<input type="search" placeholder="🔍 搜索标题/作者..." value="' + escHtml(search) +
+                    '" onkeyup="if(event.key===\'Enter\'){searchState[\'s\']=this.value;pageState[\'s\']=1;renderSubmissions(qs(\'#mc\'),filterState[\'s\']||null,1)}">' +
+                    '</div><div class="tr-right">' +
+                    '<span style="font-size:.8rem;color:#888;">共 ' + total + ' 条</span>' +
+                    '<button class="bt bg bt-sm" onclick="exportCSV(\'submissions\',\'' + (f || '') + '\',\'' + (
+                        search || '') + '\')">📥 导出CSV</button>' +
+                    '</div></div>' +
+                    '<div class="tb"><table><thead><tr><th>#</th><th>标题</th><th>作者</th><th>类型</th><th>状态</th><th>时间</th><th>操作</th></tr></thead><tbody>' +
+                    rows + '</tbody></table></div>' +
+                    renderPagination(totalPages, page, 's', 'submissions', f);
+            }).catch(function(e) {
+                mc.innerHTML = '<h2>投稿管理</h2><p style="color:#c0392b;">加载失败: ' + escHtml(e.message) + '</p>';
+            });
+        }
+
+        // ==================== 社员申请 ====================
+        function renderApplications(mc, f, page) {
+            page = page || 1;
+            pageState['a'] = page;
+            if (f !== undefined && f !== null) filterState['a'] = f;
+            else f = filterState['a'] || '';
+            var search = searchState['a'] || '';
+            var offset = (page - 1) * PER_PAGE;
+            var q = 'member_applications?select=*&order=created_at.desc&limit=' + PER_PAGE + '&offset=' + offset;
+            if (f) q += '&status=eq.' + f;
+            if (search) q += '&or=(name.ilike.%25' + encodeURIComponent(search) + '%25,email.ilike.%25' +
+                encodeURIComponent(search) + '%25)';
+            var cq = 'member_applications?select=id';
+            if (f) cq += '&status=eq.' + f;
+            if (search) cq += '&or=(name.ilike.%25' + encodeURIComponent(search) + '%25,email.ilike.%25' +
+                encodeURIComponent(search) + '%25)';
+
+            Promise.all([api(q), apiCount(cq)]).then(function(r) {
+                var data = r[0],
+                    total = r[1];
+                var rows = '';
+                var totalPages = Math.ceil(total / PER_PAGE) || 1;
+                if (data && data.length) {
+                    for (var i = 0; i < data.length; i++) {
+                        var x = data[i],
+                            st = x.status || 'pending';
+                        var bc = st === 'approved' ? 'bd1' : st === 'rejected' ? 'bd2' : 'bd0';
+                        rows += '<tr><td>' + ((page - 1) * PER_PAGE + i + 1) + '</td>' +
+                            '<td><strong>' + escHtml(x.name) + '</strong></td>' +
+                            '<td>' + escHtml(x.email) + '</td>' +
+                            '<td>' + escHtml(x.grade || '-') + '</td>' +
+                            '<td>' + escHtml((x.interest || '').substring(0, 40)) + '</td>' +
+                            '<td><span class="bd ' + bc + '">' + statusLabel(st) + '</span></td>' +
+                            '<td>' + fmtDate(x.created_at) + '</td>' +
+                            '<td style="white-space:nowrap">' +
+                            '<button class="bb b1" onclick="viewDetail(\'member_applications\',' + x.id +
+                            ')">👁</button> ' +
+                            (st !== 'approved' ?
+                                '<button class="bb b2" onclick="updateStatus(\'member_applications\',' + x.id +
+                                ',\'approved\')">✓</button> ' : '') +
+                            (st !== 'rejected' ?
+                                '<button class="bb b3" onclick="updateStatus(\'member_applications\',' + x.id +
+                                ',\'rejected\')">✗</button> ' : '') +
+                            '<button class="bb b4" onclick="deleteRecord(\'member_applications\',' + x.id +
+                            ')">🗑</button>' +
+                            '</td></tr>';
+                    }
+                } else {
+                    rows =
+                        '<tr><td colspan="8" class="empty"><i class="fas fa-inbox"></i><p>暂无社员申请</p></td></tr>';
+                }
+                mc.innerHTML =
+                    '<h2><i class="fas fa-user-plus"></i> 社员申请</h2>' +
+                    '<div class="tr"><div class="tr-left">' +
+                    '<select onchange="filterState[\'a\']=this.value;pageState[\'a\']=1;renderApplications(qs(\'#mc\'),this.value||null,1)">' +
+                    '<option value="">全部状态</option>' +
+                    '<option value="pending"' + (f === 'pending' ? ' selected' : '') + '>⏳ 待处理</option>' +
+                    '<option value="approved"' + (f === 'approved' ? ' selected' : '') + '>✅ 已通过</option>' +
+                    '<option value="rejected"' + (f === 'rejected' ? ' selected' : '') + '>❌ 已拒绝</option>' +
+                    '</select>' +
+                    '<input type="search" placeholder="🔍 搜索姓名/邮箱..." value="' + escHtml(search) +
+                    '" onkeyup="if(event.key===\'Enter\'){searchState[\'a\']=this.value;pageState[\'a\']=1;renderApplications(qs(\'#mc\'),filterState[\'a\']||null,1)}">' +
+                    '</div><div class="tr-right">' +
+                    '<span style="font-size:.8rem;color:#888;">共 ' + total + ' 条</span>' +
+                    '<button class="bt bg bt-sm" onclick="exportCSV(\'member_applications\',\'' + (f || '') + '\',\'' +
+                    (search || '') + '\')">📥 导出CSV</button>' +
+                    '</div></div>' +
+                    '<div class="tb"><table><thead><tr><th>#</th><th>姓名</th><th>邮箱</th><th>年级</th><th>兴趣</th><th>状态</th><th>时间</th><th>操作</th></tr></thead><tbody>' +
+                    rows + '</tbody></table></div>' +
+                    renderPagination(totalPages, page, 'a', 'member_applications', f);
+                refreshBadges();
+            }).catch(function(e) {
+                mc.innerHTML = '<h2>社员申请</h2><p style="color:#c0392b;">加载失败: ' + escHtml(e.message) + '</p>';
+            });
+        }
+
+        // ==================== 作品管理 ====================
+        function renderWorks(mc, page) {
+            page = page || 1;
+            pageState['w'] = page;
+            var search = searchState['w'] || '';
+            var offset = (page - 1) * PER_PAGE;
+            var q = 'works?select=*&order=created_at.desc&limit=' + PER_PAGE + '&offset=' + offset;
+            if (search) q += '&or=(title.ilike.%25' + encodeURIComponent(search) + '%25,author.ilike.%25' +
+                encodeURIComponent(search) + '%25,category.ilike.%25' + encodeURIComponent(search) + '%25)';
+            var cq = 'works?select=id';
+            if (search) cq += '&or=(title.ilike.%25' + encodeURIComponent(search) + '%25,author.ilike.%25' +
+                encodeURIComponent(search) + '%25,category.ilike.%25' + encodeURIComponent(search) + '%25)';
+
+            Promise.all([api(q), apiCount(cq)]).then(function(r) {
+                var data = r[0],
+                    total = r[1];
+                var rows = '';
+                var totalPages = Math.ceil(total / PER_PAGE) || 1;
+                if (data && data.length) {
+                    for (var i = 0; i < data.length; i++) {
+                        var x = data[i];
+                        rows += '<tr><td>' + ((page - 1) * PER_PAGE + i + 1) + '</td>' +
+                            '<td><strong>' + escHtml(x.title) + '</strong></td>' +
+                            '<td>' + escHtml(x.author) + ' <small>' + escHtml(x.grade || '') + ' ' + escHtml(x
+                                .class_name || '') + '</small></td>' +
+                            '<td>' + escHtml(x.category || '-') + '</td>' +
+                            '<td>' + (x.likes || 0) + ' ❤️</td>' +
+                            '<td>' + fmtDate(x.created_at) + '</td>' +
+                            '<td style="white-space:nowrap">' +
+                            '<button class="bb b5" onclick="editWork(' + x.id + ')">✏️</button> ' +
+                            '<button class="bb b1" onclick="viewDetail(\'works\',' + x.id + ')">👁</button> ' +
+                            '<button class="bb b-danger" onclick="deleteRecord(\'works\',' + x.id +
+                            ')">🗑</button>' +
+                            '</td></tr>';
+                    }
+                } else {
+                    rows = '<tr><td colspan="7" class="empty"><i class="fas fa-book"></i><p>暂无作品</p></td></tr>';
+                }
+                mc.innerHTML =
+                    '<h2><i class="fas fa-book-open"></i> 作品管理</h2>' +
+                    '<div class="tr"><div class="tr-left">' +
+                    '<input type="search" placeholder="🔍 搜索标题/作者/类型..." value="' + escHtml(search) +
+                    '" onkeyup="if(event.key===\'Enter\'){searchState[\'w\']=this.value;pageState[\'w\']=1;renderWorks(qs(\'#mc\'),1)}">' +
+                    '</div><div class="tr-right">' +
+                    '<span style="font-size:.8rem;color:#888;">共 ' + total + ' 条</span>' +
+                    '<button class="bt" onclick="addWork()">＋ 添加作品</button>' +
+                    '<button class="bt bg bt-sm" onclick="exportCSV(\'works\',\'\',\'' + (search || '') +
+                    '\')">📥 导出CSV</button>' +
+                    '</div></div>' +
+                    '<div class="tb"><table><thead><tr><th>#</th><th>标题</th><th>作者</th><th>类型</th><th>点赞</th><th>时间</th><th>操作</th></tr></thead><tbody>' +
+                    rows + '</tbody></table></div>' +
+                    renderPagination(totalPages, page, 'w', 'works', null);
+            }).catch(function(e) {
+                mc.innerHTML = '<h2>作品管理</h2><p style="color:#c0392b;">加载失败: ' + escHtml(e.message) + '</p>';
+            });
+        }
+
+        // ==================== 评论管理 ====================
+        function renderComments(mc, page) {
+            page = page || 1;
+            pageState['c'] = page;
+            var search = searchState['c'] || '';
+            var offset = (page - 1) * PER_PAGE;
+            var q = 'comments?select=*&order=created_at.desc&limit=' + PER_PAGE + '&offset=' + offset;
+            if (search) q += '&content.ilike.%25' + encodeURIComponent(search) + '%25';
+            var cq = 'comments?select=id';
+            if (search) cq += '&content.ilike.%25' + encodeURIComponent(search) + '%25';
+
+            Promise.all([api(q), apiCount(cq)]).then(function(r) {
+                var data = r[0],
+                    total = r[1];
+                var rows = '';
+                var totalPages = Math.max(Math.ceil(total / PER_PAGE), 1);
+                if (data && data.length) {
+                    for (var i = 0; i < data.length; i++) {
+                        var x = data[i];
+                        rows += '<tr><td>' + ((page - 1) * PER_PAGE + i + 1) + '</td>' +
+                            '<td>' + escHtml(x.user_id || '匿名') + '</td>' +
+                            '<td>' + escHtml(x.work_id || '未知') + '</td>' +
+                            '<td>' + escHtml((x.content || '').substring(0, 100)) + '</td>' +
+                            '<td>' + fmtDate(x.created_at) + '</td>' +
+                            '<td style="white-space:nowrap">' +
+                            '<button class="bb b1" onclick="viewDetail(\'comments\',' + x.id + ')">👁</button> ' +
+                            '<button class="bb b-danger" onclick="deleteRecord(\'comments\',' + x.id +
+                            ')">🗑</button>' +
+                            '</td></tr>';
+                    }
+                } else {
+                    rows =
+                        '<tr><td colspan="6" class="empty"><i class="fas fa-comment-slash"></i><p>暂无评论</p></td></tr>';
+                }
+                mc.innerHTML =
+                    '<h2><i class="fas fa-comments"></i> 评论管理</h2>' +
+                    '<div class="tr"><div class="tr-left">' +
+                    '<input type="search" placeholder="🔍 搜索评论内容..." value="' + escHtml(search) +
+                    '" onkeyup="if(event.key===\'Enter\'){searchState[\'c\']=this.value;pageState[\'c\']=1;renderComments(qs(\'#mc\'),1)}">' +
+                    '</div><div class="tr-right">' +
+                    '<span style="font-size:.8rem;color:#888;">共 ' + total + ' 条</span>' +
+                    '<button class="bt bg bt-sm" onclick="exportCSV(\'comments\',\'\',\'' + (search || '') +
+                    '\')">📥 导出CSV</button>' +
+                    '</div></div>' +
+                    '<div class="tb"><table><thead><tr><th>#</th><th>用户ID</th><th>作品ID</th><th>内容</th><th>时间</th><th>操作</th></tr></thead><tbody>' +
+                    rows + '</tbody></table></div>' +
+                    renderPagination(totalPages, page, 'c', 'comments', null);
+            }).catch(function(e) {
+                mc.innerHTML = '<h2>评论管理</h2><p style="color:#c0392b;">加载失败: ' + escHtml(e.message) + '</p>';
+            });
+        }
+
+        // ==================== 用户管理 ====================
+        function renderUsers(mc, page) {
+            page = page || 1;
+            pageState['u'] = page;
+            var search = searchState['u'] || '';
+            var offset = (page - 1) * PER_PAGE;
+            var q = 'profiles?select=*&order=created_at.desc&limit=' + PER_PAGE + '&offset=' + offset;
+            if (search) q += '&or=(display_name.ilike.%25' + encodeURIComponent(search) +
+                '%25,email.ilike.%25' + encodeURIComponent(search) + '%25)';
+            var cq = 'profiles?select=id';
+            if (search) cq += '&or=(display_name.ilike.%25' + encodeURIComponent(search) +
+                '%25,email.ilike.%25' + encodeURIComponent(search) + '%25)';
+
+            Promise.all([api(q), apiCount(cq)]).then(function(r) {
+                var data = r[0],
+                    total = r[1];
+                var rows = '';
+                var totalPages = Math.ceil(total / PER_PAGE) || 1;
+                if (data && data.length) {
+                    for (var i = 0; i < data.length; i++) {
+                        var x = data[i];
+                        var roleBadge = x.role === 'admin' ? '<span class="bd bd2">管理员</span>' :
+                            '<span class="bd bd1">用户</span>';
+                        rows += '<tr><td>' + ((page - 1) * PER_PAGE + i + 1) + '</td>' +
+                            '<td><strong>' + escHtml(x.display_name || x.email || '未设置') + '</strong></td>' +
+                            '<td>' + escHtml(x.email || '-') + '</td>' +
+                            '<td>' + roleBadge + '</td>' +
+                            '<td>' + fmtDate(x.created_at) + '</td>' +
+                            '<td style="white-space:nowrap">' +
+                            '<button class="bb b1" onclick="viewUser(\'' + x.id + '\')">👁 查看</button> ' +
+                            '<button class="bb b5" onclick="editUserRole(\'' + x.id +
+                            '\')">✏️ 编辑</button> ' +
+                            (x.role !== 'admin' ? '<button class="bb b-danger" onclick="deleteUser(\'' + x.id +
+                                '\')">🗑 删除</button>' : '') +
+                            '</td></tr>';
+                    }
+                } else {
+                    rows =
+                        '<tr><td colspan="6" class="empty"><i class="fas fa-users-slash"></i><p>暂无用户数据</p></td></tr>';
+                }
+                // ★ 修复：补全缺失的 HTML 标签
+                mc.innerHTML =
+                    '<h2><i class="fas fa-users"></i> 用户管理</h2>' +
+                    '<div class="tr"><div class="tr-left">' +
+                    '<input type="search" placeholder="🔍 搜索用户名/邮箱..." value="' + escHtml(search) +
+                    '" onkeyup="if(event.key===\'Enter\'){searchState[\'u\']=this.value;pageState[\'u\']=1;renderUsers(qs(\'#mc\'),1)}">' +
+                    '</div><div class="tr-right"><span style="font-size:.8rem;color:#888;">共 ' + total +
+                    ' 条</span></div></div>' +
+                    '<div class="tb"><table><thead><tr><th>#</th><th>用户名</th><th>邮箱</th><th>角色</th><th>注册时间</th><th>操作</th></tr></thead><tbody>' +
+                    rows + '</tbody></table></div>' +
+                    renderPagination(totalPages, page, 'u', 'profiles', null);
+            }).catch(function(e) {
+                mc.innerHTML = '<h2><i class="fas fa-users"></i> 用户管理</h2>' +
+                    '<div style="background:#fff;padding:24px;border-radius:12px;text-align:center;color:#c0392b;">' +
+                    '<i class="fas fa-exclamation-triangle" style="font-size:3rem;display:block;margin-bottom:12px;"></i>' +
+                    '<p>加载用户数据失败：' + escHtml(e.message) + '</p>' +
+                    '<p style="font-size:.8rem;color:#888;">可能原因：profiles 表不存在或缺少权限</p>' +
+                    '<button class="bt" onclick="switchPanel(\'u\')">重试</button></div>';
+            });
+        }
+
+        // ==================== 查看详情（通用） ====================
+        function viewDetail(table, id) {
+            openModal(
+                '<button class="x" onclick="closeModal()">&times;</button><h3>📋 详情</h3><p style="text-align:center;padding:20px;color:#bbb;"><i class="fas fa-spinner fa-spin"></i> 加载中...</p>'
+                );
+            api(table + '?id=eq.' + id + '&select=*').then(function(data) {
+                if (!data || !data.length) { showToast('数据不存在', 'er');
+                    closeModal(); return; }
+                var x = data[0];
+                var h = '<button class="x" onclick="closeModal()">&times;</button><h3>📋 详情</h3>';
+                var keys = Object.keys(x);
+                var labelMap = {
+                    title: '标题',
+                    name: '姓名',
+                    email: '邮箱',
+                    grade: '年级',
+                    type: '类型',
+                    status: '状态',
+                    content: '内容',
+                    author: '作者',
+                    category: '分类',
+                    likes: '点赞数',
+                    excerpt: '摘要',
+                    image_url: '封面URL',
+                    class_name: '班级',
+                    interest: '兴趣',
+                    role: '角色',
+                    display_name: '显示名称',
+                    created_at: '创建时间',
+                    published: '发布状态',
+                    user_id: '用户ID',
+                    work_id: '作品ID'
+                };
+                for (var ki = 0; ki < keys.length; ki++) {
+                    var k = keys[ki];
+                    if (k === 'id' || k === 'updated_at') continue;
+                    var v = x[k];
+                    if (v === null || v === undefined) v = '';
+                    else v = String(v);
+                    var label = labelMap[k] || k;
+                    if (k === 'content' || (v.length > 300 && k !== 'image_url')) {
+                        h += '<div class="fg"><label>' + escHtml(label) +
+                            '</label><div style="background:#f9f6f0;padding:12px;border-radius:8px;white-space:pre-wrap;font-size:.85rem;max-height:200px;overflow-y:auto;">' +
+                            escHtml(v) + '</div></div>';
+                    } else {
+                        h += '<p style="margin:4px 0;"><strong>' + escHtml(label) + '：</strong> ' + escHtml(v) +
+                            '</p>';
+                    }
+                }
+                qs('#mob').innerHTML = h;
+            }).catch(function(e) {
+                qs('#mob').innerHTML =
+                    '<button class="x" onclick="closeModal()">&times;</button><h3>❌ 加载失败</h3><p style="color:#c0392b;">' +
+                    escHtml(e.message) + '</p><button class="bt bt-sm" onclick="closeModal()">关闭</button>';
+            });
+        }
+
+        // ==================== 用户操作 ====================
+        function viewUser(uid) {
+            openModal(
+                '<button class="x" onclick="closeModal()">&times;</button><h3>📋 用户详情</h3><p style="text-align:center;padding:20px;color:#bbb;"><i class="fas fa-spinner fa-spin"></i> 加载中...</p>'
+                );
+            api('profiles?id=eq.' + uid + '&select=*').then(function(data) {
+                if (!data || !data.length) { showToast('未找到该用户', 'er');
+                    closeModal(); return; }
+                var x = data[0];
+                var h = '<button class="x" onclick="closeModal()">&times;</button><h3>📋 用户详情</h3>';
+                h += '<div style="background:#f9f6f0;padding:14px;border-radius:8px;margin-bottom:12px;">';
+                h += '<p><strong>ID：</strong>' + escHtml(x.id) + '</p>';
+                h += '<p><strong>显示名称：</strong>' + escHtml(x.display_name || '未设置') + '</p>';
+                h += '<p><strong>邮箱：</strong>' + escHtml(x.email || '未绑定') + '</p>';
+                h += '<p><strong>角色：</strong>' + (x.role === 'admin' ? '🔑 管理员' : '👤 普通用户') + '</p>';
+                h += '<p><strong>注册时间：</strong>' + fmtDateTime(x.created_at) + '</p>';
+                h += '<p><strong>最后更新：</strong>' + fmtDateTime(x.updated_at) + '</p>';
+                h += '</div>';
+                h += '<button class="bt b5 bt-sm" onclick="editUserRole(\'' + uid + '\')">✏️ 编辑角色</button> ';
+                if (x.role !== 'admin') h +=
+                    '<button class="bt b-danger bt-sm" onclick="if(confirm(\'确定删除该用户？\')){deleteUser(\'' + uid +
+                    '\');closeModal();}">🗑 删除</button>';
+                qs('#mob').innerHTML = h;
+            }).catch(function(e) {
+                qs('#mob').innerHTML =
+                    '<button class="x" onclick="closeModal()">&times;</button><h3>❌</h3><p style="color:#c0392b;">' +
+                    escHtml(e.message) + '</p><button class="bt bt-sm" onclick="closeModal()">关闭</button>';
+                showToast('查看失败: ' + e.message, 'er');
+            });
+        }
+
+        function editUserRole(uid) {
+            openModal(
+                '<button class="x" onclick="closeModal()">&times;</button><h3>✏️ 编辑角色</h3><p style="text-align:center;padding:20px;color:#bbb;"><i class="fas fa-spinner fa-spin"></i> 加载中...</p>'
+                );
+            api('profiles?id=eq.' + uid + '&select=*').then(function(data) {
+                if (!data || !data.length) { showToast('未找到该用户', 'er');
+                    closeModal(); return; }
+                var x = data[0];
+                var h = '<button class="x" onclick="closeModal()">&times;</button><h3>✏️ 编辑用户角色</h3>';
+                h += '<div style="background:#f9f6f0;padding:12px;border-radius:8px;margin-bottom:14px;">';
+                h += '<p><strong>用户名：</strong>' + escHtml(x.display_name || x.email || '未知') + '</p>';
+                h += '<p><strong>邮箱：</strong>' + escHtml(x.email || '-') + '</p>';
+                h += '<p><strong>当前角色：</strong>' + (x.role === 'admin' ? '管理员' : '普通用户') + '</p></div>';
+                h += '<div class="fg"><label>新角色</label><select id="eu_role">';
+                h += '<option value="user"' + (x.role === 'user' ? ' selected' : '') + '>👤 普通用户</option>';
+                h += '<option value="admin"' + (x.role === 'admin' ? ' selected' : '') + '>🔑 管理员</option>';
+                h += '</select></div>';
+                h += '<button class="bt" style="width:100%;margin-top:8px;" onclick="saveUserRole(\'' + uid +
+                    '\')">💾 保存角色</button>';
+                qs('#mob').innerHTML = h;
+            }).catch(function(e) {
+                qs('#mob').innerHTML =
+                    '<button class="x" onclick="closeModal()">&times;</button><h3>❌</h3><p style="color:#c0392b;">' +
+                    escHtml(e.message) + '</p><button class="bt bt-sm" onclick="closeModal()">关闭</button>';
+            });
+        }
+
+        function saveUserRole(uid) {
+            var role = qs('#eu_role').value;
+            api('profiles?id=eq.' + uid, { method: 'PATCH', body: { role: role } }).then(function() {
+                closeModal();
+                showToast('✅ 角色已更新为：' + (role === 'admin' ? '管理员' : '普通用户'));
+                switchPanel('u');
+            }).catch(function(e) { showToast('保存失败: ' + e.message, 'er'); });
+        }
+
+        function deleteUser(uid) {
+            if (!confirm('⚠️ 确定要永久删除该用户吗？此操作不可恢复！')) return;
+            api('profiles?id=eq.' + uid, { method: 'DELETE' }).then(function() {
+                showToast('🗑️ 用户已删除');
+                switchPanel('u');
+            }).catch(function(e) { showToast('删除失败: ' + e.message, 'er'); });
+        }
+
+        // ==================== 状态更新 & 删除（通用） ====================
+        function updateStatus(table, id, status) {
+            api(table + '?id=eq.' + id, { method: 'PATCH', body: { status: status } }).then(function() {
+                showToast(status === 'approved' ? '✅ 已通过' : '❌ 已拒绝');
+                refreshBadges();
+                switchPanel(currentPanel);
+            }).catch(function(e) { showToast('操作失败: ' + e.message, 'er'); });
+        }
+
+        function deleteRecord(table, id) {
+            if (!confirm('⚠️ 确定要永久删除这条记录吗？此操作不可恢复！')) return;
+            api(table + '?id=eq.' + id, { method: 'DELETE' }).then(function() {
+                showToast('🗑️ 已删除');
+                refreshBadges();
+                switchPanel(currentPanel);
+            }).catch(function(e) { showToast('删除失败: ' + e.message, 'er'); });
+        }
+
+        // ==================== 作品编辑/添加 ====================
+        function editWork(id) {
+            openModal(
+                '<button class="x" onclick="closeModal()">&times;</button><h3>✏️ 编辑作品</h3><p style="text-align:center;padding:20px;color:#bbb;"><i class="fas fa-spinner fa-spin"></i> 加载中...</p>'
+                );
+            api('works?id=eq.' + id + '&select=*').then(function(data) {
+                if (!data || !data.length) { showToast('作品不存在', 'er');
+                    closeModal(); return; }
+                var w = data[0];
+                var h = '<button class="x" onclick="closeModal()">&times;</button><h3>✏️ 编辑作品</h3>';
+                h += '<form onsubmit="return saveWork(event,' + id + ')">';
+                h += '<div class="fg"><label>标题 *</label><input id="ew_t" value="' + escHtml(w.title) +
+                    '" required></div>';
+                h += '<div class="fr"><div class="fg"><label>作者 *</label><input id="ew_a" value="' + escHtml(w
+                    .author) + '" required></div>';
+                h += '<div class="fg"><label>年级</label><input id="ew_g" value="' + escHtml(w.grade || '') +
+                    '"></div></div>';
+                h += '<div class="fr"><div class="fg"><label>班级</label><input id="ew_c" value="' + escHtml(w
+                    .class_name || '') + '"></div>';
+                h += '<div class="fg"><label>类型</label><select id="ew_ct">';
+                var cats = ['prose', 'poetry', 'fiction', 'essay'];
+                var catNames = { prose: '散文', poetry: '诗歌', fiction: '小说', essay: '随笔' };
+                for (var ci = 0; ci < cats.length; ci++) {
+                    h += '<option value="' + cats[ci] + '"' + (w.category === cats[ci] ? ' selected' : '') + '>' +
+                        catNames[cats[ci]] + '</option>';
+                }
+                h += '</select></div></div>';
+                h += '<div class="fg"><label>封面URL</label><input id="ew_i" value="' + escHtml(w.image_url || '') +
+                    '" placeholder="https://..."></div>';
+                h += '<div class="fg"><label>摘要</label><textarea id="ew_e" rows="2">' + escHtml(w.excerpt || '') +
+                    '</textarea></div>';
+                h += '<div class="fg"><label>内容 *</label><textarea id="ew_co" rows="8" required>' + escHtml(w
+                    .content || '') + '</textarea></div>';
+                h += '<button type="submit" class="bt" style="width:100%">💾 保存修改</button></form>';
+                qs('#mob').innerHTML = h;
+            }).catch(function(e) { showToast('加载失败: ' + e.message, 'er'); });
+        }
+
+        function addWork() {
+            var h = '<button class="x" onclick="closeModal()">&times;</button><h3>➕ 添加新作品</h3>';
+            h += '<form onsubmit="return createWork(event)">';
+            h += '<div class="fg"><label>标题 *</label><input id="aw_t" required></div>';
+            h += '<div class="fr"><div class="fg"><label>作者 *</label><input id="aw_a" required></div><div class="fg"><label>年级</label><input id="aw_g"></div></div>';
+            h +=
+                '<div class="fr"><div class="fg"><label>班级</label><input id="aw_c"></div><div class="fg"><label>类型</label><select id="aw_ct"><option value="prose">散文</option><option value="poetry">诗歌</option><option value="fiction">小说</option><option value="essay">随笔</option></select></div></div>';
+            h += '<div class="fg"><label>封面URL</label><input id="aw_i" placeholder="https://..."></div>';
+            h += '<div class="fg"><label>摘要</label><textarea id="aw_e" rows="2"></textarea></div>';
+            h += '<div class="fg"><label>内容 *</label><textarea id="aw_co" rows="8" required></textarea></div>';
+            h += '<button type="submit" class="bt" style="width:100%">➕ 添加作品</button></form>';
+            openModal(h);
+        }
+
+        function saveWork(e, id) {
+            e.preventDefault();
+            var body = {
+                title: qs('#ew_t').value,
+                author: qs('#ew_a').value,
+                grade: qs('#ew_g').value,
+                class_name: qs('#ew_c').value,
+                category: qs('#ew_ct').value,
+                image_url: qs('#ew_i').value,
+                excerpt: qs('#ew_e').value,
+                content: qs('#ew_co').value
+            };
+            api('works?id=eq.' + id, { method: 'PATCH', body: body }).then(function() {
+                closeModal();
+                showToast('✅ 作品已更新');
+                switchPanel('w');
+            }).catch(function(e) { showToast('保存失败: ' + e.message, 'er'); });
+            return false;
+        }
+
+        function createWork(e) {
+            e.preventDefault();
+            var body = {
+                title: qs('#aw_t').value,
+                author: qs('#aw_a').value,
+                grade: qs('#aw_g').value,
+                class_name: qs('#aw_c').value,
+                category: qs('#aw_ct').value,
+                image_url: qs('#aw_i').value,
+                excerpt: qs('#aw_e').value,
+                content: qs('#aw_co').value,
+                likes: 0,
+                published: true
+            };
+            api('works', { method: 'POST', body: body }).then(function() {
+                closeModal();
+                showToast('✅ 作品已添加');
+                switchPanel('w');
+            }).catch(function(e) { showToast('添加失败: ' + e.message, 'er'); });
+            return false;
+        }
+
+        // ==================== 导出CSV ====================
+        function exportCSV(table, filter, search) {
+            var q = table + '?select=*&limit=5000';
+            if (filter) q += '&status=eq.' + filter;
+            if (search) {
+                if (table === 'submissions') q += '&or=(title.ilike.%25' + encodeURIComponent(search) +
+                    '%25,name.ilike.%25' + encodeURIComponent(search) + '%25)';
+                else if (table === 'member_applications') q += '&or=(name.ilike.%25' + encodeURIComponent(search) +
+                    '%25,email.ilike.%25' + encodeURIComponent(search) + '%25)';
+                else if (table === 'works') q += '&or=(title.ilike.%25' + encodeURIComponent(search) +
+                    '%25,author.ilike.%25' + encodeURIComponent(search) + '%25,category.ilike.%25' +
+                    encodeURIComponent(search) + '%25)';
+                else if (table === 'comments') q += '&content.ilike.%25' + encodeURIComponent(search) + '%25';
+            }
+            api(q).then(function(data) {
+                if (!data || !data.length) { showToast('无数据可导出', 'er'); return; }
+                var exclude = ['id', 'updated_at'];
+                var headers = Object.keys(data[0]).filter(function(k) { return exclude.indexOf(k) === -1; });
+                var csv = '\uFEFF' + headers.join(',') + '\n';
+                data.forEach(function(row) {
+                    csv += headers.map(function(k) {
+                        var v = row[k];
+                        if (v === null || v === undefined) v = '';
+                        else v = String(v).replace(/"/g, '""');
+                        return '"' + v + '"';
+                    }).join(',') + '\n';
+                });
+                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+                var a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = table + '_' + new Date().toISOString().slice(0, 10) + '.csv';
+                a.click();
+                showToast('📥 导出成功 (' + data.length + ' 条)');
+            }).catch(function(e) { showToast('导出失败: ' + e.message, 'er'); });
+        }
+
+        // ==================== 弹窗 ====================
+        function openModal(html) { qs('#mob').innerHTML = html;
+            qs('#mo').classList.add('show'); }
+
+        function closeModal() { qs('#mo').classList.remove('show'); }
+        qs('#mo').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+        // ==================== 键盘 ====================
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+        qs('#lpw').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+        qs('#le').addEventListener('keydown', function(e) { if (e.key === 'Enter') qs('#lpw').focus(); });
+
+        // ==================== 初始化 ====================
+        console.log('✅ 新笔文学社管理后台 JS 已加载（修复版）');
+        console.log('   登录函数: ' + (typeof doLogin === 'function' ? '✓ 已定义' : '✗ 未定义'));
+        console.log('   导航函数: ' + (typeof switchPanel === 'function' ? '✓ 已定义' : '✗ 未定义'));
+        console.log('   计数函数: ' + (typeof apiCount === 'function' ? '✓ 已定义（已修复）' : '✗ 未定义'));
+
+        if (sessionStorage.getItem('ok') === '1') {
+            console.log('🔄 检测到已有会话，自动进入管理后台');
+            qs('#lp').style.display = 'none';
+            qs('#app').classList.add('show');
+            switchPanel('d');
+            refreshBadges();
+            setInterval(refreshBadges, 60000);
+        } else {
+            console.log('🔒 未登录，显示登录界面');
+        }
+    </script>
 </body>
 </html>
