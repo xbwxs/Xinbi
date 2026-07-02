@@ -42,7 +42,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .herop{position:absolute;inset:0;pointer-events:none;z-index:0}
 .herop div{position:absolute;border-radius:50%;background:var(--g);animation:drift linear infinite;opacity:0}
 @keyframes drift{0%{transform:translateY(105vh) scale(0);opacity:0}15%{opacity:.5}85%{opacity:.3}100%{transform:translateY(-10vh) translateX(40px) scale(1.2);opacity:0}}
-/* ✅ 修复1: .hc 非法嵌套，.1 改为独立 h1 选择器 */
 .hc{position:relative;z-index:1}
 .hc h1{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:900;color:var(--t);letter-spacing:6px;margin:0 0 16px;line-height:1.2}
 .hero h1 .ch{display:inline-block;animation:chin .55s ease forwards;opacity:0;transform:translateY(30px)}
@@ -224,7 +223,6 @@ body.dark .btn-l:hover{background:#d4c8b0;color:#1c1814}
 
 <section class="sec bp" id="members"><div class="si"><div class="st rv"><span class="tag">Members</span><h2>社员风采</h2></div><div class="mg" id="membersGrid"></div></div></section>
 
-<!-- ✅ 修复2: 投稿区域 HTML 结构修复 - 添加缺失的 div.si > div.st.rv 包裹，修正 section 属性 -->
 <section class="sec bw" id="submission"><div class="si"><div class="st rv"><span class="tag">Submit</span><h2>投稿</h2></div>
 <div class="fc rs d1"><h3>投稿申请</h3><form id="subForm">
 <div class="fr"><div class="fg"><label>姓名</label><input type="text" id="sName" placeholder="请输入您的姓名" required></div><div class="fg"><label>邮箱</label><input type="email" id="sEmail" placeholder="请输入您的邮箱" required></div></div>
@@ -257,7 +255,6 @@ body.dark .btn-l:hover{background:#d4c8b0;color:#1c1814}
 <button class="btop" id="backTop"><i class="fas fa-arrow-up"></i></button>
 <button class="dkbtn" id="darkToggle"><i class="fas fa-moon"></i></button>
 
-<!-- 文章模态框 -->
 <div class="modal" id="articleModal"><div class="modal-box"><button class="mclose" id="modalClose">&times;</button><h2 id="mTitle"></h2><div class="mmeta" id="mMeta"></div><img src="" alt="" id="mImg"><div class="mbody" id="mBody"></div><div class="macts"><span id="mLikeBtn" onclick="doLike()"><i class="far fa-heart"></i> <span id="mLikes">0</span> 喜欢</span><span id="mBookmarkBtn" onclick="doBookmark()"><i class="far fa-bookmark"></i> <span id="mBookmarkCount">0</span> 收藏</span><span onclick="focusComment()"><i class="far fa-comment"></i> 评论</span></div></div></div>
 <div class="modal" id="qrModal"><div class="modal-box" style="max-width:340px;text-align:center"><button class="mclose" onclick="closeQrModal()">&times;</button><div id="qrContent"></div></div></div>
 
@@ -279,18 +276,76 @@ function esc(s){var d=document.createElement('div');d.textContent=s||'';return d
 function toast(m,t){var e=Q('#toastEl');e.textContent=m;e.className='toast toast-'+(t||'ok')+' show';setTimeout(function(){e.classList.remove('show')},2000)}
 function api(p,o){o=o||{};var h={'apikey':SBK,'Content-Type':'application/json'};if(o.token)h.Authorization='Bearer '+o.token;return fetch(SBU+'/rest/v1/'+p,{method:o.method||'GET',headers:h,body:o.body?JSON.stringify(o.body):undefined}).then(function(r){if(o.method==='DELETE')return r.ok;return r.json()}).catch(function(e){console.error('API error:',p,e);return[]})}
 
+// 粒子背景
 (function(){var c=Q('#herop');for(var i=0;i<35;i++){var p=document.createElement('div');var s=Math.random()*4+2;p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+Math.random()*100+'%;animation-delay:'+Math.random()*10+'s;animation-duration:'+(Math.random()*8+6)+'s';c.appendChild(p)}})();
+
+// 逐字动画
 (function(){var el=Q('#heroTitle');var t=el.textContent;el.textContent='';for(var i=0;i<t.length;i++){var sp=document.createElement('span');sp.className='ch';sp.textContent=t[i];sp.style.animationDelay=(.2+i*.05)+'s';el.appendChild(sp)}})();
 
+// 滚动揭示动画
 var revealObserver=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('on');revealObserver.unobserve(entry.target)}})},{threshold:.1});
 function observeRevealEls(){QA('.rv,.rl,.rr,.rs').forEach(function(el){if(!el.classList.contains('on'))revealObserver.observe(el)})}
 observeRevealEls();
 setTimeout(function(){QA('.rv,.rl,.rr,.rs').forEach(function(el){var rect=el.getBoundingClientRect();if(rect.top<window.innerHeight&&rect.bottom>0&&!el.classList.contains('on'))el.classList.add('on')})},500);
 
+// 导航滚动高亮 + 移动菜单
 (function(){var h=Q('#header'),mb=Q('#menuBtn'),mn=Q('#mobileNav');window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>60);var ss=QA('section[id]');var cur='';ss.forEach(function(s){if(s.getBoundingClientRect().top<=150)cur=s.id});QA('.nav-links a,.mnav a').forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur)})});var open=false;mb.addEventListener('click',function(){open=!open;mb.classList.toggle('active',open);mn.classList.toggle('open',open);document.body.style.overflow=open?'hidden':''});QA('.mnav a').forEach(function(a){a.addEventListener('click',function(){open=false;mb.classList.remove('active');mn.classList.remove('open');document.body.style.overflow=''})});document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}})})})();
 
-function initUser(){var t=sessionStorage.getItem('sb_token');var u=JSON.parse(sessionStorage.getItem('sb_user')||'null');if(t&&u){return fetch(SBU+'/auth/v1/user',{headers:{'apikey':SBK,'Authorization':'Bearer '+t}}).then(function(r){return r.json()}).then(function(user){if(user&&user.id){curUser=user;return api('profiles?id=eq.'+curUser.id+'&select=*').then(function(p){curProfile=(p&&p[0])?p[0]:null;upUI()})}else{upUI()}}).catch(function(){upUI()})}else{upUI();return Promise.resolve()}}
-function upUI(){var b=Q('#userBtn'),d=Q('#userDropdown');if(curUser&&curProfile){b.textContent=(curProfile.display_name||curUser.email||'?')[0];b.title=curProfile.display_name||curUser.email;d.innerHTML='<a href="#" onclick="showProfile()"><i class="fas fa-id-card"></i> 我的主页</a><a href="#" onclick="showMyLikes()"><i class="fas fa-heart"></i> 我的点赞</a><a href="#" onclick="showMyBookmarks()"><i class="fas fa-bookmark"></i> 我的收藏</a><a href="#" onclick="signOut()"><i class="fas fa-sign-out-alt"></i> 退出</a>'}else{b.innerHTML='<i class="fas fa-user"></i>';d.innerHTML='<a href="login.html">登录</a><a href="login.html">注册</a>'}}
+// ====== 修复版 initUser：增强容错，profiles 失败不阻断登录态 ======
+function initUser(){
+    var t=sessionStorage.getItem('sb_token');
+    var u=JSON.parse(sessionStorage.getItem('sb_user')||'null');
+    if(t&&u){
+        return fetch(SBU+'/auth/v1/user',{
+            headers:{'apikey':SBK,'Authorization':'Bearer '+t}
+        })
+        .then(function(r){
+            if(!r.ok){
+                if(r.status===401||r.status===403){
+                    console.warn('Token 已过期或无效，清除登录状态');
+                    sessionStorage.clear();
+                }
+                throw new Error('Auth check failed: '+r.status);
+            }
+            return r.json();
+        })
+        .then(function(user){
+            if(user&&user.id){
+                curUser=user;
+                // profiles 查询失败不影响登录状态
+                return api('profiles?id=eq.'+curUser.id+'&select=*')
+                    .then(function(p){curProfile=(p&&p[0])?p[0]:null;})
+                    .catch(function(){console.warn('Profiles 查询失败，但用户已登录');curProfile=null;})
+                    .finally(function(){upUI();});
+            }else{upUI();}
+        })
+        .catch(function(e){
+            console.error('initUser 失败:',e);
+            // 用缓存数据尽力恢复
+            if(u&&u.id){curUser=u;curProfile=null;}
+            upUI();
+        });
+    }else{upUI();return Promise.resolve();}
+}
+
+// ====== 修复版 upUI：解耦 curUser 和 curProfile ======
+function upUI(){
+    var b=Q('#userBtn'),d=Q('#userDropdown');
+    if(curUser){
+        var displayName=(curProfile&&curProfile.display_name)||curUser.email||'?';
+        b.innerHTML='';
+        b.textContent=displayName[0].toUpperCase();
+        b.title=displayName;
+        d.innerHTML='<a href="#" onclick="showProfile()"><i class="fas fa-id-card"></i> 我的主页</a>'+
+            '<a href="#" onclick="showMyLikes()"><i class="fas fa-heart"></i> 我的点赞</a>'+
+            '<a href="#" onclick="showMyBookmarks()"><i class="fas fa-bookmark"></i> 我的收藏</a>'+
+            '<a href="#" onclick="signOut()"><i class="fas fa-sign-out-alt"></i> 退出</a>';
+    }else{
+        b.innerHTML='<i class="fas fa-user"></i>';
+        d.innerHTML='<a href="login.html">登录</a><a href="login.html">注册</a>';
+    }
+}
+
 function toggleUserDropdown(){Q('#userDropdown').classList.toggle('show')}
 document.addEventListener('click',function(e){if(!e.target.closest('#userBtn')&&!e.target.closest('#userDropdown'))Q('#userDropdown').classList.remove('show')});
 function signOut(){sessionStorage.clear();curUser=null;curProfile=null;upUI();toast('已退出登录')}
@@ -312,8 +367,10 @@ function loadEvents(){Q('#eventsList').innerHTML=evs.map(function(ev,i){return '
 function loadMembers(){Q('#membersGrid').innerHTML=mbs.map(function(m,i){return '<div class="mc rv d'+(i+1)+'"><div class="mav"><i class="fas fa-user"></i></div><h3>'+m.n+'</h3><div class="mrole">'+m.r+'</div><p class="mq">'+m.q+'</p><div class="mbio"><p>'+m.bio+'</p></div></div>'}).join('');requestAnimationFrame(function(){requestAnimationFrame(observeRevealEls)})}
 function loadPortal(){Q('#portalGrid').innerHTML=pts.map(function(p,i){return '<a href="'+p.u+'" target="_blank" class="pc rv d'+(i%4+1)+'"><i class="fas '+p.i+'"></i><h3>'+p.n+'</h3><p>'+p.d+'</p><span class="lt">访问网站 →</span></a>'}).join('');requestAnimationFrame(function(){requestAnimationFrame(observeRevealEls)})}
 
+// 活动倒计时
 setInterval(function(){var n=new Date();QA('.cdw').forEach(function(el){var td=new Date(el.dataset.td),df=td-n;var vs=el.querySelectorAll('.val');if(df<=0){vs.forEach(function(v){v.textContent='00'});return}var d=Math.floor(df/864e5),h=Math.floor((df%864e5)/36e5),m=Math.floor((df%36e5)/6e4),s=Math.floor((df%6e4)/1e3);[d,h,m,s].forEach(function(v,i){if(vs[i])vs[i].textContent=String(v).padStart(2,'0')})})},1000);
 
+// 搜索
 (function(){var inp=Q('#searchInput'),res=Q('#searchR');inp.addEventListener('input',function(){var q=this.value.trim().toLowerCase();res.innerHTML='';if(q.length<2){res.classList.remove('show');return}api('works?select=id,title,author,grade,class_name,excerpt&or=(title.ilike.%25'+encodeURIComponent(q)+'%25,author.ilike.%25'+encodeURIComponent(q)+'%25,excerpt.ilike.%25'+encodeURIComponent(q)+'%25)&limit=10').then(function(data){if(!data||!data.length){res.innerHTML='<div style="padding:14px;text-align:center;color:#9b8e7c;">没有找到匹配的作品</div>'}else{data.forEach(function(w){var div=document.createElement('div');div.className='item';div.innerHTML='<div class="tt">'+hl(w.title,q)+'</div><div class="mm">'+hl((w.grade||'')+' · '+(w.class_name||'')+'班 · '+w.author,q)+'</div>';div.addEventListener('click',function(){openWorkById(w.id);res.classList.remove('show');inp.value=w.title});res.appendChild(div)})}res.classList.add('show')})});document.addEventListener('click',function(e){if(!inp.contains(e.target)&&!res.contains(e.target))res.classList.remove('show')})})();
 function hl(t,q){var re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');return t.replace(re,function(m){return '<span class="hl">'+m+'</span>'})}
 
@@ -323,49 +380,159 @@ function upLikeBtn(){if(!curUser||!curWork)return;api('likes?user_id=eq.'+curUse
 function upBookmarkBtn(){if(!curUser||!curWork)return;api('bookmarks?user_id=eq.'+curUser.id+'&work_id=eq.'+curWork.id).then(function(d){var bm=d&&d.length>0;var el=Q('#mBookmarkBtn');if(el){el.querySelector('i').className=bm?'fas fa-bookmark':'far fa-bookmark';el.querySelector('i').style.color=bm?'var(--g)':''}})}
 function doLike(){if(!curUser||!curWork){toast('请先登录','err');window.location.href='login.html';return}var token=sessionStorage.getItem('sb_token');var h={'apikey':SBK,'Authorization':'Bearer '+token,'Content-Type':'application/json'};api('likes?user_id=eq.'+curUser.id+'&work_id=eq.'+curWork.id).then(function(ex){if(ex&&ex.length>0){fetch(SBU+'/rest/v1/likes?id=eq.'+ex[0].id,{method:'DELETE',headers:h}).then(function(){var nl=Math.max(0,parseInt(Q('#mLikes').textContent)-1);fetch(SBU+'/rest/v1/works?id=eq.'+curWork.id,{method:'PATCH',headers:h,body:JSON.stringify({likes:nl})}).then(function(){Q('#mLikes').textContent=nl;Q('#mLikeBtn').querySelector('i').className='far fa-heart';Q('#mLikeBtn').style.color=''})})}else{fetch(SBU+'/rest/v1/likes',{method:'POST',headers:h,body:JSON.stringify({user_id:curUser.id,work_id:curWork.id})}).then(function(){var nl=parseInt(Q('#mLikes').textContent)+1;fetch(SBU+'/rest/v1/works?id=eq.'+curWork.id,{method:'PATCH',headers:h,body:JSON.stringify({likes:nl})}).then(function(){Q('#mLikes').textContent=nl;Q('#mLikeBtn').querySelector('i').className='fas fa-heart';Q('#mLikeBtn').style.color='var(--r)'})})}})}
 function doBookmark(){if(!curUser||!curWork){toast('请先登录','err');return}var token=sessionStorage.getItem('sb_token');var h={'apikey':SBK,'Authorization':'Bearer '+token,'Content-Type':'application/json'};api('bookmarks?user_id=eq.'+curUser.id+'&work_id=eq.'+curWork.id).then(function(ex){if(ex&&ex.length>0){fetch(SBU+'/rest/v1/bookmarks?id=eq.'+ex[0].id,{method:'DELETE',headers:h}).then(function(){var nc=Math.max(0,parseInt(Q('#mBookmarkCount').textContent)-1);fetch(SBU+'/rest/v1/works?id=eq.'+curWork.id,{method:'PATCH',headers:h,body:JSON.stringify({bookmarks:nc})}).then(function(){Q('#mBookmarkCount').textContent=nc;Q('#mBookmarkBtn').querySelector('i').className='far fa-bookmark';Q('#mBookmarkBtn').querySelector('i').style.color='';toast('已取消收藏')})})}else{fetch(SBU+'/rest/v1/bookmarks',{method:'POST',headers:h,body:JSON.stringify({user_id:curUser.id,work_id:curWork.id})}).then(function(){var nc=parseInt(Q('#mBookmarkCount').textContent)+1;fetch(SBU+'/rest/v1/works?id=eq.'+curWork.id,{method:'PATCH',headers:h,body:JSON.stringify({bookmarks:nc})}).then(function(){Q('#mBookmarkCount').textContent=nc;Q('#mBookmarkBtn').querySelector('i').className='fas fa-bookmark';Q('#mBookmarkBtn').querySelector('i').style.color='var(--g)';toast('已收藏')})})}})}
-function focusComment(){var cmt=document.getElementById('cmtInput');if(cmt){cmt.scrollIntoView({behavior:'smooth'});setTimeout(function(){cmt.focus()},500)}else{toast('请先登录后评论','err')}}
-function loadComments(wid){api('comments?work_id=eq.'+wid+'&select=*,profiles(display_name)&order=created_at.desc&limit=50').then(function(data){var list=(data||[]).map(function(c){return '<div style="padding:10px 1px solid #f0e8d8;"><strong>'+esc(c.profiles?c.profiles.display_name:'匿名用户')+'</strong><span style="color:#9b8e7c;font-size:.72rem;"> · '+new Date(c.created_at).toLocaleDateString()+'</span><p style="margin-top:4px;font-size:.88rem;">'+esc(c.content)+'</p></div>'}).join('')||'<p style="color:#9b8e7c;">暂无评论，快来发表第一条评论吧</p>';var ih=curUser?'<div style="display:flex;gap:6px;margin-top:10px;"><input id="cmtInput" placeholder="写下你的评论..." style="flex:1;padding:9px;border:1.5px solid #e0d8c8;border-radius:8px;font-family:inherit;font-size:.88rem;"><button class="btn btn-d" style="width:auto;padding:8px 14px;font-size:.82rem;" onclick="postComment('+wid+')">发表</button></div>':'<p style="color:#9b8e7c;margin-top:6px;">请<a href="login.html" style="color:var(--r);">登录</a>后评论</p>';Q('#mBody').innerHTML+='<div style="margin-top:18px;padding-top:14px;border-top:2px solid #e0d8c8;"><h4 style="margin-bottom:10px;">评论 ('+(data||[]).length+')</h4>'+list+ih+'</div>'})}
-function postComment(wid){var inp=document.getElementById('cmtInput');if(!inp||!inp.value.trim())return;var token=sessionStorage.getItem('sb_token');fetch(SBU+'/rest/v1/comments',{method:'POST',headers:{'apikey':SBK,'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({user_id:curUser.id,work_id:wid,content:inp.value.trim()})}).then(function(r){if(r.ok){loadComments(wid);toast('评论已发表')}else{toast('评论失败','err')}})}
 
+// ====== 修复版 focusComment：先检查 curUser，再检查 DOM ======
+function focusComment(){
+    if(!curUser){
+        toast('请先登录后再评论','err');
+        window.location.href='login.html';
+        return;
+    }
+    var cmt=document.getElementById('cmtInput');
+    if(cmt){
+        cmt.scrollIntoView({behavior:'smooth'});
+        setTimeout(function(){cmt.focus()},500);
+    }else{
+        toast('评论模块加载中，请稍后再试','err');
+    }
+}
+
+// ====== 修复版 loadComments：更健壮的登录判断 ======
+function loadComments(wid){
+    api('comments?work_id=eq.'+wid+'&select=*,profiles(display_name)&order=created_at.desc&limit=50').then(function(data){
+        var list=(data||[]).map(function(c){
+            return '<div style="padding:10px 0;border-bottom:1px solid #f0e8d8;">'+
+                '<strong>'+esc(c.profiles?c.profiles.display_name:'匿名用户')+'</strong>'+
+                '<span style="color:#9b8e7c;font-size:.72rem;"> · '+new Date(c.created_at).toLocaleDateString()+'</span>'+
+                '<p style="margin-top:4px;font-size:.88rem;">'+esc(c.content)+'</p></div>';
+        }).join('')||'<p style="color:#9b8e7c;">暂无评论，快来发表第一条评论吧</p>';
+
+        var isLoggedIn=!!curUser;
+        var ih=isLoggedIn
+            ?'<div style="display:flex;gap:6px;margin-top:10px;">'+
+             '<input id="cmtInput" placeholder="写下你的评论..." style="flex:1;padding:9px;border:1.5px solid #e0d8c8;border-radius:8px;font-family:inherit;font-size:.88rem;">'+
+             '<button class="btn btn-d" style="width:auto;padding:8px 14px;font-size:.82rem;" onclick="postComment('+wid+')">发表</button></div>'
+            :'<p style="color:#9b8e7c;margin-top:6px;">请<a href="login.html" style="color:var(--r);">登录</a>后评论</p>';
+
+        Q('#mBody').innerHTML+='<div style="margin-top:18px;padding-top:14px;border-top:2px solid #e0d8c8;">'+
+            '<h4 style="margin-bottom:10px;">评论 ('+(data||[]).length+')</h4>'+list+ih+'</div>';
+    });
+}
+
+function postComment(wid){
+    var inp=document.getElementById('cmtInput');
+    if(!inp||!inp.value.trim())return;
+    var token=sessionStorage.getItem('sb_token');
+    fetch(SBU+'/rest/v1/comments',{
+        method:'POST',
+        headers:{'apikey':SBK,'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+        body:JSON.stringify({user_id:curUser.id,work_id:wid,content:inp.value.trim()})
+    }).then(function(r){
+        if(r.ok){loadComments(wid);toast('评论已发表')}
+        else{toast('评论失败','err')}
+    });
+}
+
+// 模态框关闭
 Q('#modalClose').addEventListener('click',function(){Q('#articleModal').classList.remove('open');document.body.style.overflow='';curWork=null});
 Q('#articleModal').addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';curWork=null}});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){Q('#articleModal').classList.remove('open');Q('#qrModal').classList.remove('open');document.body.style.overflow='';curWork=null}});
 function closeQrModal(){Q('#qrModal').classList.remove('open');document.body.style.overflow=''}
 
-function showProfile(){if(!curUser)return;Q('#userDropdown').classList.remove('show');Promise.all([api('likes?user_id=eq.'+curUser.id+'&select=work_id'),api('comments?user_id=eq.'+curUser.id+'&select=id'),api('bookmarks?user_id=eq.'+curUser.id+'&select=work_id')]).then(function(r){var ld=r[0],cd=r[1],bd=r[2];Q('#mTitle').textContent='我的主页';Q('#mMeta').textContent='@'+(curProfile.username||'');Q('#mImg').style.display='none';Q('#mBody').innerHTML='<div style="text-align:center;padding:20px 0;"><div style="width:76px;height:76px;border-radius:50%;background:var(--r);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:12px;">'+(curProfile.display_name||curProfile.username||'?')[0]+'</div><h3>'+(curProfile.display_name||curProfile.username)+'</h3><p style="color:#8b7e6c;">@'+(curProfile.username||'')+' · '+curUser.email+'</p><p>'+(curProfile.bio||'这个人很懒，什么都没写...')+'</p></div><div style="display:flex;gap:20px;justify-content:center;padding:14px 0;border-top:1px solid #eee;"><div><strong>'+ld.length+'</strong><br><small>点赞</small></div><div><strong>'+bd.length+'</strong><br><small>收藏</small></div><div><strong>'+cd.length+'</strong><br><small>评论</small></div></div><button class="btn btn-l" style="width:100%;margin-top:10px;" onclick="showEditProfile()">编辑资料</button>';Q('#articleModal').classList.add('open');document.body.style.overflow='hidden'})}
-function showEditProfile(){Q('#mBody').innerHTML='<h3 style="text-align:center;color:var(--r);">编辑资料</h3><div class="fg"><label>显示名称</label><input id="ep_n" value="'+esc(curProfile.display_name||'')+'"></div><div class="fg"><label>个人简介</label><textarea id="ep_b" rows="3">'+esc(curProfile.bio||'')+'</textarea></div><button class="btn btn-d" style="width:100%;" onclick="saveProfile()">保存</button>'}
+// 用户功能
+function showProfile(){if(!curUser)return;Q('#userDropdown').classList.remove('show');Promise.all([api('likes?user_id=eq.'+curUser.id+'&select=work_id'),api('comments?user_id=eq.'+curUser.id+'&select=id'),api('bookmarks?user_id=eq.'+curUser.id+'&select=work_id')]).then(function(r){var ld=r[0],cd=r[1],bd=r[2];Q('#mTitle').textContent='我的主页';Q('#mMeta').textContent='@'+(curProfile&&curProfile.username?curProfile.username:'');Q('#mImg').style.display='none';var dn=curProfile&&curProfile.display_name?curProfile.display_name:(curProfile&&curProfile.username?curProfile.username:'?');Q('#mBody').innerHTML='<div style="text-align:center;padding:20px 0;"><div style="width:76px;height:76px;border-radius:50%;background:var(--r);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:12px;">'+dn[0]+'</div><h3>'+dn+'</h3><p style="color:#8b7e6c;">@'+(curProfile&&curProfile.username?curProfile.username:'')+' · '+curUser.email+'</p><p>'+(curProfile&&curProfile.bio?curProfile.bio:'这个人很懒，什么都没写...')+'</p></div><div style="display:flex;gap:20px;justify-content:center;padding:14px 0;border-top:1px solid #eee;"><div><strong>'+ld.length+'</strong><br><small>点赞</small></div><div><strong>'+bd.length+'</strong><br><small>收藏</small></div><div><strong>'+cd.length+'</strong><br><small>评论</small></div></div><button class="btn btn-l" style="width:100%;margin-top:10px;" onclick="showEditProfile()">编辑资料</button>';Q('#articleModal').classList.add('open');document.body.style.overflow='hidden'})}
+function showEditProfile(){Q('#mBody').innerHTML='<h3 style="text-align:center;color:var(--r);">编辑资料</h3><div class="fg"><label>显示名称</label><input id="ep_n" value="'+esc(curProfile&&curProfile.display_name?curProfile.display_name:'')+'"></div><div class="fg"><label>个人简介</label><textarea id="ep_b" rows="3">'+esc(curProfile&&curProfile.bio?curProfile.bio:'')+'</textarea></div><button class="btn btn-d" style="width:100%;" onclick="saveProfile()">保存</button>'}
 function saveProfile(){var token=sessionStorage.getItem('sb_token');fetch(SBU+'/rest/v1/profiles?id=eq.'+curUser.id,{method:'PATCH',headers:{'apikey':SBK,'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({display_name:document.getElementById('ep_n').value,bio:document.getElementById('ep_b').value})}).then(function(){return api('profiles?id=eq.'+curUser.id+'&select=*')}).then(function(p){curProfile=(p&&p[0])?p[0]:null;showProfile();toast('资料已更新')})}
 function showMyLikes(){if(!curUser)return;Q('#userDropdown').classList.remove('show');api('likes?user_id=eq.'+curUser.id+'&select=work_id').then(function(ld){if(!ld.length){toast('还没有点赞过作品');return}var ids=ld.map(function(l){return l.work_id}).join(',');api('works?id=in.('+ids+')&select=id,title,author').then(function(works){Q('#mTitle').textContent='我的点赞';Q('#mMeta').textContent='共 '+works.length+' 篇';Q('#mImg').style.display='none';Q('#mBody').innerHTML=works.map(function(w){return '<div style="padding:11px 0;border-bottom:1px solid #eee;cursor:pointer;" onclick="openWorkById('+w.id+')"><strong style="color:var(--r);">'+esc(w.title)+'</strong><span style="color:#9b8e7c;font-size:.82rem;"> — '+esc(w.author)+'</span></div>'}).join('');Q('#articleModal').classList.add('open');document.body.style.overflow='hidden'})})}
 function showMyBookmarks(){if(!curUser)return;Q('#userDropdown').classList.remove('show');api('bookmarks?user_id=eq.'+curUser.id+'&select=work_id').then(function(bd){if(!bd.length){toast('还没有收藏过作品');return}var ids=bd.map(function(l){return l.work_id}).join(',');api('works?id=in.('+ids+')&select=id,title,author').then(function(works){Q('#mTitle').textContent='我的收藏';Q('#mMeta').textContent='共 '+works.length+' 篇';Q('#mImg').style.display='none';Q('#mBody').innerHTML=works.map(function(w){return '<div style="padding:11px 0;border-bottom:1px solid #eee;cursor:pointer;" onclick="openWorkById('+w.id+')"><strong style="color:var(--g);">'+esc(w.title)+'</strong><span style="color:#9b8e7c;font-size:.82rem;"> — '+esc(w.author)+'</span></div>'}).join('');Q('#articleModal').classList.add('open');document.body.style.overflow='hidden'})})}
 
+// 全局点击委托
 document.addEventListener('click',function(e){
-var card=e.target.closest('.wc');if(card&&!e.target.closest('.like-btn')&&!e.target.closest('.bookmark-btn')){openWorkById(parseInt(card.dataset.id))}
-var lb=e.target.closest('.like-btn');
-if(lb){e.stopPropagation();if(!curUser){toast('请先登录','err');window.location.href='login.html';return}
-var id=parseInt(lb.dataset.id),token=sessionStorage.getItem('sb_token'),h={'apikey':SBK,'Authorization':'Bearer '+token,'Content-Type':'application/json'};
-api('likes?user_id=eq.'+curUser.id+'&work_id=eq.'+id).then(function(ex){
-if(ex&&ex.length>0){fetch(SBU+'/rest/v1/likes?id=eq.'+ex[0].id,{method:'DELETE',headers:h}).then(function(){return api('works?id=eq.'+id+'&select=likes')}).then(function(w){var nl=Math.max(0,(w[0]?w[0].likes:1)-1);fetch(SBU+'/rest/v1/works?id=eq.'+id,{method:'PATCH',headers:h,body:JSON.stringify({likes:nl})}).then(function(){lb.querySelector('i').className='far fa-heart';lb.classList.remove('liked');var cn=lb.childNodes;if(cn.length>1)cn[1].textContent=' '+nl})})}
-else{fetch(SBU+'/rest/v1/likes',{method:'POST',headers:h,body:JSON.stringify({user_id:curUser.id,work_id:id})}).then(function(){return api('works?id=eq.'+id+'&select=likes')}).then(function(w){var nl=(w[0]?w[0].likes:0)+1;fetch(SBU+'/rest/v1/works?id=eq.'+id,{method:'PATCH',headers:h,body:JSON.stringify({likes:nl})}).then(function(){lb.querySelector('i').className='fas fa-heart';lb.classList.add('liked');var cn=lb.childNodes;if(cn.length>1)cn[1].textContent=' '+nl})})}})}
-var bb=e.target.closest('.bookmark-btn');
-if(bb){e.stopPropagation();e.preventDefault();if(!curUser){toast('请先登录','err');return}
-var bid=parseInt(bb.dataset.id),btoken=sessionStorage.getItem('sb_token'),bh={'apikey':SBK,'Authorization':'Bearer '+btoken,'Content-Type':'application/json'};
-api('bookmarks?user_id=eq.'+curUser.id+'&work_id=eq.'+bid).then(function(ex){
-if(ex&&ex.length>0){fetch(SBU+'/rest/v1/bookmarks?id=eq.'+ex[0].id,{method:'DELETE',headers:bh}).then(function(){return api('works?id=eq.'+bid+'&select=bookmarks')}).then(function(w){var nc=Math.max(0,(w[0]?w[0].bookmarks:1)-1);fetch(SBU+'/rest/v1/works?id=eq.'+bid,{method:'PATCH',headers:bh,body:JSON.stringify({bookmarks:nc})}).then(function(){bb.querySelector('i').className='far fa-bookmark';bb.classList.remove('liked');var cn=bb.childNodes;if(cn.length>1)cn[1].textContent=' '+nc})})}
-else{fetch(SBU+'/rest/v1/bookmarks',{method:'POST',headers:bh,body:JSON.stringify({user_id:curUser.id,work_id:bid})}).then(function(){return api('works?id=eq.'+bid+'&select=bookmarks')}).then(function(w){var nc=(w[0]?w[0].bookmarks:0)+1;fetch(SBU+'/rest/v1/works?id=eq.'+bid,{method:'PATCH',headers:bh,body:JSON.stringify({bookmarks:nc})}).then(function(){bb.querySelector('i').className='fas fa-bookmark';bb.classList.add('liked');bb.querySelector('i').style.color='var(--g)';var cn=bb.childNodes;if(cn.length>1)cn[1].textContent=' '+nc})})}})}
-var qt=e.target.closest('.qr-link');if(qt){e.preventDefault();var tp=qt.dataset.type,tt=tp==='wechat'?'关注微信公众号':'加入QQ交流群',dd=tp==='wechat'?'新笔文学社公众号':'QQ群号: 1015083829';Q('#qrContent').innerHTML='<h3 style="color:var(--r);margin-bottom:14px;">'+tt+'</h3><div style="width:150px;height:150px;margin:0 auto 12px;background:#f5f5f5;border-radius:10px;display:flex;align-items:center;justify-content:center;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+encodeURIComponent(dd)+'" alt="QR" style="max-width:100%;max-height:100%;"></div><p style="font-size:.82rem;color:#6b5f52;">'+dd+'</p>';Q('#qrModal').classList.add('open');document.body.style.overflow='hidden'}
+    var card=e.target.closest('.wc');
+    if(card&&!e.target.closest('.like-btn')&&!e.target.closest('.bookmark-btn')){
+        openWorkById(parseInt(card.dataset.id));
+    }
+
+    var lb=e.target.closest('.like-btn');
+    if(lb){e.stopPropagation();if(!curUser){toast('请先登录','err');window.location.href='login.html';return}
+        var id=parseInt(lb.dataset.id),token=sessionStorage.getItem('sb_token'),h={'apikey':SBK,'Authorization':'Bearer '+token,'Content-Type':'application/json'};
+        api('likes?user_id=eq.'+curUser.id+'&work_id=eq.'+id).then(function(ex){
+            if(ex&&ex.length>0){
+                fetch(SBU+'/rest/v1/likes?id=eq.'+ex[0].id,{method:'DELETE',headers:h}).then(function(){
+                    return api('works?id=eq.'+id+'&select=likes');
+                }).then(function(w){var nl=Math.max(0,(w[0]?w[0].likes:1)-1);
+                    fetch(SBU+'/rest/v1/works?id=eq.'+id,{method:'PATCH',headers:h,body:JSON.stringify({likes:nl})}).then(function(){
+                        lb.querySelector('i').className='far fa-heart';lb.classList.remove('liked');
+                        var cn=lb.childNodes;if(cn.length>1)cn[1].textContent=' '+nl;
+                    });
+                });
+            }else{
+                fetch(SBU+'/rest/v1/likes',{method:'POST',headers:h,body:JSON.stringify({user_id:curUser.id,work_id:id})}).then(function(){
+                    return api('works?id=eq.'+id+'&select=likes');
+                }).then(function(w){var nl=(w[0]?w[0].likes:0)+1;
+                    fetch(SBU+'/rest/v1/works?id=eq.'+id,{method:'PATCH',headers:h,body:JSON.stringify({likes:nl})}).then(function(){
+                        lb.querySelector('i').className='fas fa-heart';lb.classList.add('liked');
+                        var cn=lb.childNodes;if(cn.length>1)cn[1].textContent=' '+nl;
+                    });
+                });
+            }
+        });
+    }
+
+    var bb=e.target.closest('.bookmark-btn');
+    if(bb){e.stopPropagation();e.preventDefault();if(!curUser){toast('请先登录','err');return}
+        var bid=parseInt(bb.dataset.id),btoken=sessionStorage.getItem('sb_token'),bh={'apikey':SBK,'Authorization':'Bearer '+btoken,'Content-Type':'application/json'};
+        api('bookmarks?user_id=eq.'+curUser.id+'&work_id=eq.'+bid).then(function(ex){
+            if(ex&&ex.length>0){
+                fetch(SBU+'/rest/v1/bookmarks?id=eq.'+ex[0].id,{method:'DELETE',headers:bh}).then(function(){
+                    return api('works?id=eq.'+bid+'&select=bookmarks');
+                }).then(function(w){var nc=Math.max(0,(w[0]?w[0].bookmarks:1)-1);
+                    fetch(SBU+'/rest/v1/works?id=eq.'+bid,{method:'PATCH',headers:bh,body:JSON.stringify({bookmarks:nc})}).then(function(){
+                        bb.querySelector('i').className='far fa-bookmark';bb.classList.remove('liked');
+                        var cn=bb.childNodes;if(cn.length>1)cn[1].textContent=' '+nc;
+                    });
+                });
+            }else{
+                fetch(SBU+'/rest/v1/bookmarks',{method:'POST',headers:bh,body:JSON.stringify({user_id:curUser.id,work_id:bid})}).then(function(){
+                    return api('works?id=eq.'+bid+'&select=bookmarks');
+                }).then(function(w){var nc=(w[0]?w[0].bookmarks:0)+1;
+                    fetch(SBU+'/rest/v1/works?id=eq.'+bid,{method:'PATCH',headers:bh,body:JSON.stringify({bookmarks:nc})}).then(function(){
+                        bb.querySelector('i').className='fas fa-bookmark';bb.classList.add('liked');
+                        bb.querySelector('i').style.color='var(--g)';
+                        var cn=bb.childNodes;if(cn.length>1)cn[1].textContent=' '+nc;
+                    });
+                });
+            }
+        });
+    }
+
+    var qt=e.target.closest('.qr-link');
+    if(qt){e.preventDefault();var tp=qt.dataset.type,tt=tp==='wechat'?'关注微信公众号':'加入QQ交流群',dd=tp==='wechat'?'新笔文学社公众号':'QQ群号: 1015083829';
+        Q('#qrContent').innerHTML='<h3 style="color:var(--r);margin-bottom:14px;">'+tt+'</h3><div style="width:150px;height:150px;margin:0 auto 12px;background:#f5f5f5;border-radius:10px;display:flex;align-items:center;justify-content:center;"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+encodeURIComponent(dd)+'" alt="QR" style="max-width:100%;max-height:100%;"></div><p style="font-size:.82rem;color:#6b5f52;">'+dd+'</p>';
+        Q('#qrModal').classList.add('open');document.body.style.overflow='hidden';
+    }
 });
 
+// 筛选按钮
 QA('#filtersB button').forEach(function(b){b.addEventListener('click',function(){QA('#filtersB button').forEach(function(x){x.classList.remove('on')});this.classList.add('on');loadWorks(this.dataset.f)})});
 
+// 表单提交
 Q('#subForm').addEventListener('submit',function(e){e.preventDefault();var btn=this.querySelector('button');btn.disabled=true;btn.textContent='提交中...';fetch(SBU+'/rest/v1/submissions',{method:'POST',headers:{'apikey':SBK,'Content-Type':'application/json'},body:JSON.stringify({name:Q('#sName').value,email:Q('#sEmail').value,phone:Q('#sPhone').value,grade:Q('#sGrade').value,type:Q('#sType').value,title:Q('#sTitle').value,content:Q('#sContent').value,status:'pending'})}).then(function(r){if(r.ok){Q('#subOk').style.display='block';e.target.reset();setTimeout(function(){Q('#subOk').style.display='none'},4000)}else{toast('提交失败','err')}}).catch(function(){toast('网络错误','err')}).finally(function(){btn.disabled=false;btn.textContent='提交投稿'})});
 Q('#memForm').addEventListener('submit',function(e){e.preventDefault();var btn=this.querySelector('button');btn.disabled=true;btn.textContent='提交中...';fetch(SBU+'/rest/v1/member_applications',{method:'POST',headers:{'apikey':SBK,'Content-Type':'application/json'},body:JSON.stringify({name:Q('#mName').value,email:Q('#mEmail').value,phone:Q('#mPhone').value,grade:Q('#mGrade').value,interest:Q('#mInterest').value,message:Q('#mMsg').value,status:'pending'})}).then(function(r){if(r.ok){Q('#memOk').style.display='block';e.target.reset();setTimeout(function(){Q('#memOk').style.display='none'},4000)}else{toast('提交失败','err')}}).catch(function(){toast('网络错误','err')}).finally(function(){btn.disabled=false;btn.textContent='提交申请'})});
 
+// 进度条 + 回到顶部
 (function(){var pb=Q('#pbar'),bt=Q('#backTop');window.addEventListener('scroll',function(){var y=window.scrollY;bt.classList.toggle('show',y>500);var h=document.documentElement.scrollHeight-window.innerHeight;pb.style.width=h>0?(y/h*100)+'%':'0%'});bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();
+
+// 深色模式
 (function(){var t=Q('#darkToggle'),i=t.querySelector('i');var d=localStorage.getItem('darkMode')==='true';function a(v){document.body.classList.toggle('dark',v);i.className=v?'fas fa-sun':'fas fa-moon';localStorage.setItem('darkMode',v)}a(d);t.addEventListener('click',function(){d=!d;a(d)})})();
+
+// 访问统计
 fetch(SBU+'/rest/v1/visits',{method:'POST',headers:{'apikey':SBK,'Content-Type':'application/json'},body:JSON.stringify({page:'home'})}).catch(function(){});
 
+// 暴露全局函数
 window.showProfile=showProfile;window.showEditProfile=showEditProfile;window.saveProfile=saveProfile;window.showMyLikes=showMyLikes;window.showMyBookmarks=showMyBookmarks;window.openWorkById=openWorkById;window.doLike=doLike;window.doBookmark=doBookmark;window.postComment=postComment;window.focusComment=focusComment;window.closeQrModal=closeQrModal;window.signOut=signOut;window.toggleUserDropdown=toggleUserDropdown;
 
+// 启动
 initUser().then(function(){loadWorks();loadEvents();loadMembers();loadPortal()});
 })();
 </script>
