@@ -340,6 +340,7 @@ body.dark .cmt-login-hint{color:#8b7e6c}
 <button data-f="essay">随笔</button>
 </div>
 <div class="wg" id="worksGrid"></div></div></section>
+<div id="loadMoreWrap" style="text-align:center;margin-top:24px;"></div>
 
 <section class="sec bw" id="events"><div class="si"><div class="st rv"><span class="tag">Events</span><h2>近期活动</h2></div><div class="el" id="eventsList"></div></div></section>
 
@@ -400,6 +401,7 @@ var SBU="https://aybnmewinjckmftvctvx.supabase.co";
 var SBK="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE";
 
 var curUser=null,curProfile=null,curWork=null;
+var worksPage=0,worksFilter="all",worksHasMore=true,worksLoading=false;
 var cats={prose:"散文",poetry:"诗歌",fiction:"小说",essay:"随笔"};
 var evs=[
 {day:"12",mon:"6月",t:"诗歌创作工作坊",time:"2025年6月12日 18:00-20:00",loc:"特立体育馆",d:"特邀诗人指导，探索现代诗歌创作技巧。",td:new Date(2025,5,12)},
@@ -448,7 +450,47 @@ document.addEventListener("click",function(e){if(!e.target.closest("#userBtn")&&
 function signOut(){sessionStorage.clear();curUser=null;curProfile=null;upUI();toast("已退出登录");}
 
 /* 加载作品 */
-function loadWorks(f){f=f||"all";var q="works?select=*&order=created_at.desc&limit=50";if(f!=="all")q="works?select=*&category=eq."+f+"&order=created_at.desc&limit=50";var g=Q("#worksGrid");if(!g)return;g.innerHTML="<p style=\"text-align:center;color:#999;grid-column:1/-1;padding:60px 20px;\">加载中...</p>";api(q).then(function(data){if(!Array.isArray(data))data=[];if(!data.length){g.innerHTML="<p style=\"text-align:center;color:#bbb;grid-column:1/-1;padding:60px 20px;\">暂无作品</p>";return;}g.innerHTML=data.map(function(w,i){return"<div class=\"wc rv d"+(i%4+1)+"\" data-id=\""+w.id+"\"><div class=\"wci\"><img src=\""+(w.image_url||"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400")+"\" alt=\"\" loading=\"lazy\"><span class=\"wcbadge\">"+(cats[w.category]||"")+"</span></div><div class=\"wcb\"><h3>"+esc(w.title)+"</h3><div class=\"wcm\">"+esc(w.grade||"")+" · "+esc(w.class_name||"")+"班 · "+esc(w.author)+"</div><p class=\"wce\">"+esc(w.excerpt||"")+"</p><div class=\"wcs\"><span class=\"like-btn\" data-id=\""+w.id+"\"><i class=\"far fa-heart\"></i> "+(w.likes||0)+"</span><span class=\"bookmark-btn\" data-id=\""+w.id+"\"><i class=\"far fa-bookmark\"></i> "+(w.bookmarks||0)+"</span></div></div></div>";}).join("");requestAnimationFrame(function(){requestAnimationFrame(function(){g.querySelectorAll(".rv,.rl,.rr,.rs").forEach(function(el){var r=el.getBoundingClientRect();if(r.top<window.innerHeight)el.classList.add("on");else revealObserver.observe(el);});});});});}
+function loadWorks(f,append){
+  if(worksLoading)return;
+  if(!append){worksPage=0;worksHasMore=true;var g=Q("#worksGrid");if(g)g.innerHTML="";}
+  if(!worksHasMore&&append){return;}
+  worksLoading=true;
+  if(f!==undefined)worksFilter=f;
+  var limit=3,offset=worksPage*limit;
+  var q="works?select=*&order=created_at.desc&limit="+limit+"&offset="+offset;
+  if(worksFilter!=="all")q="works?select=*&category=eq."+worksFilter+"&order=created_at.desc&limit="+limit+"&offset="+offset;
+  var g=Q("#worksGrid");if(!g)return;
+  if(!append)g.innerHTML="<p style=\"text-align:center;color:#999;grid-column:1/-1;padding:60px 20px;\">加载中...</p>";
+  else{var lw=Q("#loadMoreWrap");if(lw)lw.innerHTML="<p style=\"color:#999;\">加载中...</p>";}
+  api(q).then(function(data){
+    if(!Array.isArray(data))data=[];
+    if(!append&&!data.length){g.innerHTML="<p style=\"text-align:center;color:#bbb;grid-column:1/-1;padding:60px 20px;\">暂无作品</p>";worksHasMore=false;worksLoading=false;return;}
+    if(data.length<limit)worksHasMore=false;
+    var html=data.map(function(w,i){return"<div class=\"wc rv\" data-id=\""+w.id+"\"><div class=\"wci\"><img src=\""+(w.image_url||"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400")+"\" alt=\"\" loading=\"lazy\"><span class=\"wcbadge\">"+(cats[w.category]||"")+"</span></div><div class=\"wcb\"><h3>"+esc(w.title)+"</h3><div class=\"wcm\">"+esc(w.grade||"")+" · "+esc(w.class_name||"")+"班 · "+esc(w.author)+"</div><p class=\"wce\">"+esc(w.excerpt||"")+"</p><div class=\"wcs\"><span class=\"like-btn\" data-id=\""+w.id+"\"><i class=\"far fa-heart\"></i> "+(w.likes||0)+"</span><span class=\"bookmark-btn\" data-id=\""+w.id+"\"><i class=\"far fa-bookmark\"></i> "+(w.bookmarks||0)+"</span></div></div></div>";}).join("");
+    if(append){g.insertAdjacentHTML("beforeend",html);}else{g.innerHTML=html;}
+    worksPage++;
+    var lw=Q("#loadMoreWrap");
+    if(lw){
+      if(worksHasMore){lw.innerHTML="<button class=\"btn btn-l\" id=\"loadMoreBtn\">加载更多</button>";var mb=Q("#loadMoreBtn");if(mb)mb.addEventListener("click",function(){loadWorks(worksFilter,true);});}
+      else if(data.length>0){lw.innerHTML="<p style=\"color:#999;\">已加载全部作品</p>";}
+      else{lw.innerHTML="";}
+    }
+  worksLoading=false;
+    // 让新增卡片能被滚动监听器接管
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        var cards=g.querySelectorAll(".rv:not(.on)");
+        cards.forEach(function(el){
+          var r=el.getBoundingClientRect();
+          if(r.top<window.innerHeight)el.classList.add("on");
+          else revealObserver.observe(el);
+        });
+      });
+    });
+  }).catch(function(){
+    worksLoading=false;
+  });
+}
 
 /* 加载活动/社员/门户 */
 function loadEvents(){var el=Q("#eventsList");if(!el)return;el.innerHTML=evs.map(function(ev,i){return"<div class=\"ec rv d"+(i+1)+"\"><div class=\"ed\"><span class=\"day\">"+ev.day+"</span><span class=\"mon\">"+ev.mon+"</span></div><div class=\"eb\"><h3>"+ev.t+"</h3><p><strong>时间：</strong>"+ev.time+"</p><p><strong>地点：</strong>"+ev.loc+"</p><p>"+ev.d+"</p><div class=\"cdw\" data-td=\""+ev.td.toISOString()+"\"><div><div class=\"val days\">--</div><div class=\"lbl\">天</div></div><div><div class=\"val hours\">--</div><div class=\"lbl\">时</div></div><div><div class=\"val minutes\">--</div><div class=\"lbl\">分</div></div><div><div class=\"val seconds\">--</div><div class=\"lbl\">秒</div></div></div></div></div>";}).join("");requestAnimationFrame(function(){requestAnimationFrame(observeRevealEls);});}
@@ -626,7 +668,7 @@ document.addEventListener("click",function(e){
 });
 
 /* 筛选 */
-QA("#filtersB button").forEach(function(b){b.addEventListener("click",function(){QA("#filtersB button").forEach(function(x){x.classList.remove("on");});this.classList.add("on");loadWorks(this.dataset.f);});});
+QA("#filtersB button").forEach(function(b){b.addEventListener("click",function(){QA("#filtersB button").forEach(function(x){x.classList.remove("on");});this.classList.add("on");loadWorks(this.dataset.f,false);});});
 
 /* 表单 */
 Q("#subForm").addEventListener("submit",function(e){e.preventDefault();var btn=this.querySelector("button");btn.disabled=true;btn.textContent="提交中...";fetch(SBU+"/rest/v1/submissions",{method:"POST",headers:{"apikey":SBK,"Content-Type":"application/json"},body:JSON.stringify({name:Q("#sName").value,email:Q("#sEmail").value,phone:Q("#sPhone").value,grade:Q("#sGrade").value,type:Q("#sType").value,title:Q("#sTitle").value,content:Q("#sContent").value,status:"pending"})}).then(function(r){if(r.ok){Q("#subOk").style.display="block";e.target.reset();setTimeout(function(){Q("#subOk").style.display="none";},4000);}else{toast("提交失败","err");}}).catch(function(){toast("网络错误","err");}).finally(function(){btn.disabled=false;btn.textContent="提交投稿";});});
