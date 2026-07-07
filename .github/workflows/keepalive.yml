@@ -1,10 +1,26 @@
-name: keepalive
+name: Supabase 保活
+
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 3 */4 * *'
+  workflow_dispatch:
+
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          curl -s -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE" "https://aybnmewinjckmftvctvx.supabase.co/rest/v1/visits?limit=1" > /dev/null
+      - name: 🔄 Ping Supabase
+        run: |
+          RESPONSE=$(curl -s -w "\n%{http_code}" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE" \
+            "https://aybnmewinjckmftvctvx.supabase.co/rest/v1/visits?select=id&limit=1")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "✅ 保活成功 | $(date -u '+%Y-%m-%d %H:%M UTC')"
+          else
+            echo "⚠️  响应码: $HTTP_CODE"
+            echo "返回: $BODY"
+          fi
