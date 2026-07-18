@@ -2,25 +2,32 @@ name: Supabase 保活
 
 on:
   schedule:
-    - cron: '0 3 */4 * *'
+    - cron: '0 6 * * *'
   workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: 🔄 Ping Supabase
+      - name: 🔄 Health Check
         run: |
           RESPONSE=$(curl -s -w "\n%{http_code}" \
-            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE" \
-            "https://aybnmewinjckmftvctvx.supabase.co/rest/v1/visits?select=id&limit=1")
-          
+            "https://aybnmewinjckmftvctvx.supabase.co/rest/v1/")
           HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
-          BODY=$(echo "$RESPONSE" | sed '$d')
           
           if [ "$HTTP_CODE" = "200" ]; then
-            echo "✅ 保活成功 | $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo "✅ 保活成功"
           else
-            echo "⚠️  响应码: $HTTP_CODE"
-            echo "返回: $BODY"
+            echo "⚠️ 状态码 $HTTP_CODE - 尝试备用方式"
+            curl -s -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE" \
+            "https://aybnmewinjckmftvctvx.supabase.co/rest/v1/visits?select=id&limit=1"
           fi
+
+      - name: 🔐 Auth Ping
+        run: |
+          curl -s -X POST \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5Ym5tZXdpbmpja21mdHZjdHZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDE3NTIsImV4cCI6MjA5ODMxNzc1Mn0.BtEGJgZZbMCVvkRkmgeSw8mrTcf6xIiLZrL9Xm7mdnE" \
+            -H "Content-Type: application/json" \
+            "https://aybnmewinjckmftvctvx.supabase.co/auth/v1/signup" \
+            -d '{"email":"keepalive@internal.local","password":"keepalive123"}' || true
+          echo "✅ 保活完成"
